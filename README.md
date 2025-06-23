@@ -8,7 +8,7 @@ I'm exploring HTML, CSS, and JavaScript step by step — building understanding 
 - `HTML/` – Basic structure, tags, forms, tables, etc.
 - `CSS/` – Styling, selectors, flexbox, grid, animations
 - `JavaScript/` – Variables, functions, DOM manipulation, events, etc.
-- `Projects/` *(optional)* – Small practice exercises or mini-projects
+- `Projects/` – Small practice exercises or mini-projects
 
 ## 🎯 Learning Goals
 
