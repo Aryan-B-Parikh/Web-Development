@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Page Layout</title>
+    <style>
+        .header,.footer
+        {
+            background-color: gray;
+            color:white;
+            text-align: center;
+            padding: 10px;
+        }
+        .menu
+        {
+            background-color: lightgray;
+            padding: 1%;
+        }
+        .menu a
+        {
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+        .menu a:hover
+        {
+            background-color: white;
+            text-decoration: none;
+            color: black;
+        } 
+        .content
+        {
+            display: flex;
+            justify-content: space-between;
+            padding: 220px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>My Web Page</h1>
+    </div>
+    <div class="menu">
+        <a href="#" style="padding: 20px;">Home</a>
+        <a href="#" style="padding: 20px;">About Us</a>
+        <a href="#" style="padding: 20px;">Products</a>
+        <a href="#" style="padding: 20px;">Contact Us</a>
+    </div>
+    <div class="content">
+        <div class="left">
+            <p>Left Side</p>
+            <img src="https://wallpapers.com/images/high/iron-man-pictures-oaohn1wqj0py50al.webp" width="100" height="150">
+        </div>
+        <div class="main">
+            <p>Main Central Part</p>
+            <img src="https://wallpapers.com/images/high/dr-strange-artwork-circles-background-eh91uhkmkwb58usd.webp" width="100" height="150">
+        </div>
+        <div class="right">
+            <p>RIGHT Side</p>
+            <img src="https://cdn.pixabay.com/photo/2023/02/08/02/50/thanos-7775611_1280.jpg" width="100" height="150">
+        </div>
+    </div>
+    <div class="footer">
+        <p>Footer</p>
+    </div>
+</body>
+</html>
