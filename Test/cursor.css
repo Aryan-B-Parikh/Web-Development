@@ -1,0 +1,18 @@
+/* Custom Cursor CSS */
+.circle {
+  position: fixed;
+  top: 0; left: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255,0,0,0.7);
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%) scale(1);
+  transition: background 0.2s, transform 0.2s;
+  mix-blend-mode: lighten;
+}
+.circle.active {
+  background: #fff;
+  transform: translate(-50%, -50%) scale(1.4);
+} 
