@@ -27,10 +27,24 @@ header {
 nav {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
+  align-items: center;
   padding: 1rem 0;
   background: var(--nav-bg);
+  gap: 1rem;
+  justify-content: center;
+  position: relative;
+}
+
+.logo-link {
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 0;
+}
+
+nav a:not(.logo-link) {
+  margin-left: 0.5rem;
 }
 
 nav a {
@@ -70,11 +84,28 @@ footer {
 
 /* Home Page Layout */
 main.home {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 60vh;
+}
+main.home::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../CSS/bg.webp') center/cover no-repeat;
+  opacity: 0.5;
+  z-index: 0;
+}
+main.home > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* About Page Layout */
@@ -132,11 +163,27 @@ button:hover, button:focus {
 }
 
 /* Responsive Design */
+@media (max-width: 900px) {
+  .logo-link {
+    left: 1rem;
+  }
+}
+
 @media (max-width: 700px) {
   nav {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     gap: 0.5rem;
+    justify-content: flex-start;
+    position: static;
+  }
+  .logo-link {
+    position: static;
+    transform: none;
+    margin: 0 auto 0 0;
+  }
+  nav a:not(.logo-link) {
+    margin-left: 0;
   }
   main.about, main.register {
     padding: 1rem;
@@ -166,4 +213,10 @@ body.theme-dark {
   --nav-bg: #23272a;
   --nav-link: #7abaff;
   --nav-link-active: #0057b8;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  display: block;
 }
