@@ -17,14 +17,28 @@
       <a href="register.html">Register</a>
     </nav>
   </header>
-  <main class="register">
-    <h2>New User Registration</h2>
-    <form action="dashboard.html" method="post">
-      <label>Name: <input type="text" name="name"></label><br><br>
-      <label>Email: <input type="email" name="email"></label><br><br>
-      <label>Password: <input type="password" name="password"></label><br><br>
-      <button type="submit">Register</button>
-    </form>
+  <main class="register-main">
+    <div class="register-card fade-in animate-delay-1">
+      <h2 class="fade-up animate-delay-2">New User Registration</h2>
+      <form action="dashboard.html" method="post" class="fade-up animate-delay-3">
+        <label for="name">Name</label>
+        <div class="input-group">
+          <span class="input-icon">&#128100;</span>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <label for="email">Email</label>
+        <div class="input-group">
+          <span class="input-icon">&#9993;</span>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <label for="password">Password</label>
+        <div class="input-group">
+          <span class="input-icon">&#128274;</span>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="register-btn">Register</button>
+      </form>
+    </div>
   </main>
   <footer>
     <p>&copy; 2024 Charusat Portal. All rights reserved.</p>
