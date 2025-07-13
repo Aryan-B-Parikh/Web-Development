@@ -21,20 +21,63 @@
       <a href="admin.html">Admin</a>
     </nav>
   </header>
-  <main>
-    <h1>CHARUSAT Student Dashboard</h1>
-    <h2>Welcome, Aryan!</h2>
-    <section>
-      <h3>Upcoming Events</h3>
-      <p>No events scheduled yet.</p>
-    </section>
-    <section>
-      <h3>Recent Results</h3>
-      <p>Result: Pending...</p>
-    </section>
-  </main>
+    <main class="dashboard-main">
+        <div class="dashboard-header">
+            <h1>Student Dashboard</h1>
+            <p class="welcome-text">Welcome back, <strong>Aryan Parikh</strong>!</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <!-- Academic Overview -->
+            <div class="dashboard-card academic-overview">
+                <h3>📚 Academic Overview</h3>
+                <div class="overview-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">8.5</span>
+                        <span class="stat-label">Current CGPA</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">7/8</span>
+                        <span class="stat-label">Semester</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">145</span>
+                        <span class="stat-label">Credits Earned</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card attendance-summary">
+                <h3>📅 Attendance Summary</h3>
+                <div class="attendance-stats">
+                    <div class="attendance-item">
+                        <div class="attendance-circle">
+                            <div class="circle-progress" style="--progress: 92%">
+                                <span>92%</span>
+                            </div>
+                        </div>
+                        <p>Overall Attendance</p>
+                    </div>
+                    <div class="attendance-details">
+                        <div class="attendance-subject">
+                            <span>Database Management</span>
+                            <span class="att-percentage">95%</span>
+                        </div>
+                        <div class="attendance-subject">
+                            <span>Software Engineering</span>
+                            <span class="att-percentage">88%</span>
+                        </div>
+                        <div class="attendance-subject">
+                            <span>Web Development</span>
+                            <span class="att-percentage">94%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
   <footer>
-    <p>&copy; 2024 Charusat Portal. All rights reserved.</p>
+    <p>&copy; 2025 Charusat Portal. All rights reserved.</p>
   </footer>
 </body>
 </html>
