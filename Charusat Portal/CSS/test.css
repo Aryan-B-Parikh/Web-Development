@@ -1,5 +1,16 @@
 /* ===== CHARUSAT About Us Section Styling (Blue, White, Orange) ===== */
 
+:root {
+  --blue: #1565c0;
+  --light-blue: #1976d2;
+  --orange: #ff9800;
+  --white: #fff;
+  --light-bg: #f4f7fa;
+  --border-radius: 8px;
+  --shadow: 0 2px 16px rgba(21,101,192,0.08);
+  --transition: 0.2s ease;
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -15,8 +26,8 @@ body {
 
 /* Hero Section */
 .hero-section {
-  background: linear-gradient(90deg, #1565c0 0%, #1976d2 100%);
-  color: #fff;
+background: linear-gradient(90deg, var(--blue) 0%, var(--light-blue) 100%);
+  color: var(--white);
   text-align: center;
   padding: 60px 20px 40px 20px;
   border-radius: 0 0 30px 30px;
@@ -43,16 +54,6 @@ body {
   color: #fff;
 }
 
-/* Orange accent underline for hero */
-.hero-title::after {
-  content: '';
-  display: block;
-  width: 60px;
-  height: 4px;
-  background: #ff9800;
-  margin: 16px auto 0 auto;
-  border-radius: 2px;
-}
 
 /* About Section */
 .about-section {
@@ -196,8 +197,8 @@ body {
 
 /* Footer */
 .footer-section {
-  background: #1565c0;
-  color: #fff;
+background: var(--blue);
+  color: var(--white);
   padding: 28px 0 18px 0;
   border-radius: 20px 20px 0 0;
   margin-top: 40px;
