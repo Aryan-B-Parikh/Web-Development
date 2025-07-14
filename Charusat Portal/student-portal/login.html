@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | CHARUSAT Student Portal</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>CHARUSAT Portal</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="flex align-center justify-center" style="min-height: 70vh;">
+        <div class="card fade-in" style="max-width: 400px; width: 100%;">
+            <h2 class="text-center text-blue mb-3">Login to CHARUSAT Portal</h2>
+            <form action="dashboard.html" method="get">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+            <div class="text-center mt-3">
+                <a href="#" class="text-blue">Forgot Password?</a>
+            </div>
+        </div>
+    </main>
+    <footer class="footer-content">
+        <p>&copy; 2025 CHARUSAT Student Portal. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | CHARUSAT Student Portal</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>CHARUSAT Portal</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="profilepage.html">Profile</a></li>
+                <li><a href="results.html">Results</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="admin.html">Admin</a></li>
+                <li><a href="index.html" class="logout-link">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="main-content">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Student Dashboard</h1>
+                <p>Welcome back, <strong>Aryan Parikh</strong>!</p>
+            </div>
+            
+            <!-- Dashboard Cards with Grid Layout -->
+            <div class="dashboard-grid">
+                <!-- Academic Overview Card -->
+                <div class="dashboard-card">
+                    <h3>📚 Academic Overview</h3>
+                    <div class="flex-container">
+                        <div class="flex-item">
+                            <div class="stat-number">8.5</div>
+                            <div class="stat-label">Current CGPA</div>
+                        </div>
+                        <div class="flex-item">
+                            <div class="stat-number">7/8</div>
+                            <div class="stat-label">Semester</div>
+                        </div>
+                        <div class="flex-item">
+                            <div class="stat-number">145</div>
+                            <div class="stat-label">Credits Earned</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attendance Summary Card -->
+                <div class="dashboard-card">
+                    <h3>📅 Attendance Summary</h3>
+                    <div class="attendance-overview">
+                        <div class="attendance-percentage">92%</div>
+                        <div class="attendance-label">Overall Attendance</div>
+                    </div>
+                    <div class="attendance-details">
+                        <div class="attendance-item">
+                            <span>Database Management</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="attendance-item">
+                            <span>Software Engineering</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="attendance-item">
+                            <span>Web Development</span>
+                            <span>94%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions Card -->
+                <div class="dashboard-card">
+                    <h3>⚡ Quick Actions</h3>
+                    <div class="quick-actions">
+                        <a href="results.html" class="action-btn">View Results</a>
+                        <a href="events.html" class="action-btn">Upcoming Events</a>
+                        <a href="feedback.html" class="action-btn">Give Feedback</a>
+                        <a href="profilepage.html" class="action-btn">Edit Profile</a>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Card -->
+                <div class="dashboard-card">
+                    <h3>🔔 Recent Activity</h3>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">📊</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Semester 7 Results Published</div>
+                                <div class="activity-time">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📅</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Tech Symposium Registration Open</div>
+                                <div class="activity-time">1 day ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📝</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Assignment Submitted - Web Development</div>
+                                <div class="activity-time">3 days ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 CHARUSAT Student Portal. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

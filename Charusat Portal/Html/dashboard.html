@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Dashboard | Charusat Portal</title>
-  <link rel="stylesheet" href="../CSS/istyle.css">
+  <link rel="stylesheet" href="../CSS/simplified.css">
 </head>
 <body>
   <header>
@@ -21,56 +21,51 @@
       <a href="admin.html">Admin</a>
     </nav>
   </header>
-    <main class="dashboard-main">
-        <div class="dashboard-header">
-            <h1>Student Dashboard</h1>
-            <p class="welcome-text">Welcome back, <strong>Aryan Parikh</strong>!</p>
+    <main>
+        <div class="section text-center mb-4">
+            <h1 class="text-blue">Student Dashboard</h1>
+            <p class="text-light">Welcome back, <strong>Aryan Parikh</strong>!</p>
         </div>
         
-        <div class="dashboard-grid">
+        <div class="card-grid">
             <!-- Academic Overview -->
-            <div class="dashboard-card academic-overview">
-                <h3>📚 Academic Overview</h3>
-                <div class="overview-stats">
-                    <div class="stat-item">
-                        <span class="stat-value">8.5</span>
-                        <span class="stat-label">Current CGPA</span>
+            <div class="card">
+                <h3 class="text-blue mb-2">📚 Academic Overview</h3>
+                <div class="flex justify-center gap-3 flex-wrap">
+                    <div class="text-center">
+                        <div class="text-blue" style="font-size: 2rem; font-weight: bold;">8.5</div>
+                        <div class="text-light">Current CGPA</div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-value">7/8</span>
-                        <span class="stat-label">Semester</span>
+                    <div class="text-center">
+                        <div class="text-blue" style="font-size: 2rem; font-weight: bold;">7/8</div>
+                        <div class="text-light">Semester</div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-value">145</span>
-                        <span class="stat-label">Credits Earned</span>
+                    <div class="text-center">
+                        <div class="text-blue" style="font-size: 2rem; font-weight: bold;">145</div>
+                        <div class="text-light">Credits Earned</div>
                     </div>
                 </div>
             </div>
 
-            <div class="dashboard-card attendance-summary">
-                <h3>📅 Attendance Summary</h3>
-                <div class="attendance-stats">
-                    <div class="attendance-item">
-                        <div class="attendance-circle">
-                            <div class="circle-progress" style="--progress: 92%">
-                                <span>92%</span>
-                            </div>
-                        </div>
-                        <p>Overall Attendance</p>
+            <!-- Attendance Summary -->
+            <div class="card">
+                <h3 class="text-blue mb-2">📅 Attendance Summary</h3>
+                <div class="text-center mb-3">
+                    <div class="text-blue" style="font-size: 3rem; font-weight: bold;">92%</div>
+                    <div class="text-light">Overall Attendance</div>
+                </div>
+                <div class="flex flex-column gap-1">
+                    <div class="flex justify-center gap-2">
+                        <span>Database Management</span>
+                        <span class="text-blue font-weight: bold;">95%</span>
                     </div>
-                    <div class="attendance-details">
-                        <div class="attendance-subject">
-                            <span>Database Management</span>
-                            <span class="att-percentage">95%</span>
-                        </div>
-                        <div class="attendance-subject">
-                            <span>Software Engineering</span>
-                            <span class="att-percentage">88%</span>
-                        </div>
-                        <div class="attendance-subject">
-                            <span>Web Development</span>
-                            <span class="att-percentage">94%</span>
-                        </div>
+                    <div class="flex justify-center gap-2">
+                        <span>Software Engineering</span>
+                        <span class="text-blue font-weight: bold;">88%</span>
+                    </div>
+                    <div class="flex justify-center gap-2">
+                        <span>Web Development</span>
+                        <span class="text-blue font-weight: bold;">94%</span>
                     </div>
                 </div>
             </div>
