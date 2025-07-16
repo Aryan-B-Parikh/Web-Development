@@ -4,23 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin | CHARUSAT Student Portal</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="nav-brand">
-                <h1>CHARUSAT Portal</h1>
+                <img src="images/logo.png" alt="CHARUSAT Portal Logo" class="logo">
             </div>
-            <ul class="nav-links">
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="events.html">Events</a></li>
-                <li><a href="profilepage.html">Profile</a></li>
-                <li><a href="results.html">Results</a></li>
-                <li><a href="feedback.html">Feedback</a></li>
-                <li><a href="admin.html">Admin</a></li>
-                <li><a href="index.html" class="logout-link">Logout</a></li>
-            </ul>
+            
+            <!-- Hidden checkbox for CSS-only toggle -->
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            
+            <!-- Hamburger Menu Button -->
+            <label for="nav-toggle" class="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            
+            <!-- Side Navigation Menu -->
+            <div class="side-nav">
+                <div class="side-nav-header">
+                    <h3>Menu</h3>
+                    <label for="nav-toggle" class="close-btn">&times;</label>
+                </div>
+                <ul class="side-nav-links">
+                    <li><a href="index.html"><i class="icon">🏠</i> Home</a></li>
+                    <li><a href="about.html"><i class="icon">📚</i> About Us</a></li>
+                    <li><a href="events.html"><i class="icon">🎉</i> Events</a></li>
+                    <!-- Personal details - enabled for authenticated users -->
+                    <li><a href="dashboard.html"><i class="icon">📊</i> Dashboard</a></li>
+                    <li><a href="profilepage.html"><i class="icon">👤</i> Profile</a></li>
+                    <li><a href="results.html"><i class="icon">🎯</i> Results</a></li>
+                    <li><a href="feedback.html"><i class="icon">💬</i> Feedback</a></li>
+                    <li><a href="admin.html"><i class="icon">⚙️</i> Admin</a></li>
+                    <li><a href="index.html" class="logout-link"><i class="icon">🔐</i> Logout</a></li>
+                </ul>
+            </div>
+            
+            <!-- Overlay -->
+            <div class="overlay"></div>
         </nav>
     </header>
     <main class="main-content">
