@@ -29,3 +29,9 @@ function myfunc(){
     console.log(str2);
     console.log(str3);
 }
+function getsum(){
+    let tex1=document.getElementById("tex1").value;
+    let tex2=document.getElementById("tex2").value;
+    let tex3=document.getElementById("tex2").value;
+    document.writeln("The sum is: " + tex1+tex2 + "<br>");
+}
