@@ -1,11 +1,11 @@
-/* ===== BASE RESET STYLES ===== */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Reset styles for consistent rendering across browsers */
+
 html {
   font-size: 16px;
   scroll-behavior: smooth;
@@ -41,14 +41,14 @@ img {
   padding: 0 20px;
 }
 
-/* ===== HEADER & NAVIGATION ===== */
+
 header {
   background: #1565c0;
   color: white;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.navbar {
+nav {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,12 +56,7 @@ header {
   position: relative;
 }
 
-.nav-brand h1 {
-  font-size: 1.5rem;
-  color: white;
-}
-
-.nav-brand .logo {
+nav img {
   height: 60px;
   width: auto;
   max-width: 300px;
@@ -71,64 +66,81 @@ header {
   border-radius: 8px;
 }
 
-.nav-links {
-  display: flex;
-  gap: 2rem;
-}
-
-.nav-links a {
+nav ul {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 300px;
+  height: 100vh;
+  background: linear-gradient(180deg, #1565c0 0%, #1976d2 100%);
   color: white;
-  font-weight: 500;
-  transition: color 0.3s;
+  transition: right 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+  padding: 4rem 0 1rem 0;
+  margin: 0;
 }
 
-.nav-links a:hover {
-  color: #ff9800;
+nav ul li {
+  margin: 0;
 }
 
-/* ===== NAVIGATION TOGGLE (HIDDEN CHECKBOX) ===== */
-.nav-toggle {
+nav ul a {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+nav ul a:hover {
+  background: rgba(255,255,255,0.1);
+  padding-left: 2rem;
+}
+
+
+#nav-toggle {
   display: none;
 }
 
-/* ===== HAMBURGER MENU STYLES ===== */
-.hamburger-menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 1001;
+
+nav label {
   position: absolute;
   right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  z-index: 1001;
+  user-select: none;
 }
 
-.hamburger-menu span {
+nav label:hover {
+  color: #ff9800;
+}
+
+
+#nav-toggle:checked ~ ul {
+  right: 0;
+}
+
+
+#nav-toggle:checked ~ ul::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 3px;
-  background: white;
-  border-radius: 2px;
-  transition: all 0.3s ease;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: -1;
 }
 
-/* Hamburger animation when checked */
-.nav-toggle:checked ~ .hamburger-menu span:nth-child(1) {
-  transform: rotate(45deg) translate(8px, 8px);
-}
 
-.nav-toggle:checked ~ .hamburger-menu span:nth-child(2) {
-  opacity: 0;
-}
-
-.nav-toggle:checked ~ .hamburger-menu span:nth-child(3) {
-  transform: rotate(-45deg) translate(8px, -8px);
-}
-
-/* ===== SIDE NAVIGATION STYLES ===== */
 .side-nav {
   position: fixed;
   top: 0;
@@ -143,7 +155,7 @@ header {
   box-shadow: -2px 0 10px rgba(0,0,0,0.1);
 }
 
-/* Show side nav when checkbox is checked */
+
 .nav-toggle:checked ~ .side-nav {
   right: 0;
 }
@@ -203,7 +215,7 @@ header {
   display: inline-block;
 }
 
-/* ===== OVERLAY STYLES ===== */
+
 .overlay {
   position: fixed;
   top: 0;
@@ -217,40 +229,41 @@ header {
   z-index: 999;
 }
 
-/* Show overlay when checkbox is checked */
+
 .nav-toggle:checked ~ .overlay {
   opacity: 1;
   visibility: visible;
 }
 
-/* ===== MAIN CONTENT ===== */
-.main-content {
+
+main {
   min-height: calc(100vh - 120px);
-  padding: 2rem 0;
+  padding: 2rem;
 }
 
-/* ===== RESULTS PAGE SPECIFIC STYLES ===== */
 
-.results-header {
+main header {
   text-align: center;
   padding: 2rem 1rem;
   background: #1565c0;
   color: #fff;
   border-radius: 12px;
-  margin: 2rem 0 2rem 0;
+  margin-bottom: 2rem;
+  box-shadow: none;
 }
 
-.results-header h1 {
+main header h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
 }
 
-.results-header p {
+main header p {
   font-size: 1rem;
   opacity: 0.9;
 }
 
-.results-container {
+
+main section {
   background: #fff;
   padding: 1.5rem;
   border-radius: 12px;
@@ -258,126 +271,122 @@ header {
   border: 1px solid #ddd;
 }
 
-.semester-section h2 {
+main section h2 {
   color: #1565c0;
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
 
-.results-table-container {
-  overflow-x: auto;
-  margin-top: 1rem;
-}
 
-.results-table {
+table {
   width: 100%;
   border-collapse: collapse;
   background: #fff;
+  overflow-x: auto;
+  display: block;
+  white-space: nowrap;
 }
 
-.results-table th,
-.results-table td {
+@media (min-width: 768px) {
+  table {
+    display: table;
+    white-space: normal;
+  }
+}
+
+table thead,
+table tbody {
+  display: table-header-group;
+}
+
+table tbody {
+  display: table-row-group;
+}
+
+table th,
+table td {
   padding: 0.7rem 0.5rem;
   text-align: center;
   border-bottom: 1px solid #e3f2fd;
   font-size: 0.95rem;
+  display: table-cell;
 }
 
-.results-table th {
+table th {
   background: #1565c0;
   color: #fff;
   font-weight: 600;
 }
 
-.results-table tbody tr:last-child td {
+table tbody tr:last-child td {
   border-bottom: none;
 }
 
-.grade-cell {
+
+.grade-a-plus { 
+  background: #1565c0;
+  color: white;
   font-weight: bold;
-  color: #fff;
   border-radius: 6px;
   padding: 0.3rem 0.5rem;
-  font-size: 1rem;
 }
-
-.grade-a-plus { background: #1565c0; }
-.grade-a { background: #1976d2; }
-.grade-b-plus { background: #90caf9; color: #1565c0; }
-
-.status-badge {
-  padding: 0.2rem 0.6rem;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  background: #bbdefb;
+.grade-a { 
+  background: #1976d2;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 0.3rem 0.5rem;
+}
+.grade-b-plus { 
+  background: #90caf9;
   color: #1565c0;
-  border: 1px solid #1565c0;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 0.3rem 0.5rem;
 }
 
-.semester-summary {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin: 2rem 0;
-  border: 1px solid #ddd;
-}
 
-.semester-summary h2 {
-  color: #1565c0;
-  text-align: center;
-  margin-bottom: 1.2rem;
-  font-size: 1.5rem;
-}
-
-.summary-stats {
-  display: flex;
-  justify-content: space-around;
+dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
 }
 
-.stat-item {
-  text-align: center;
-  padding: 1rem;
-  background: #e3f2fd;
-  border-radius: 12px;
-  flex: 1;
-  border: none;
-}
-
-.stat-value {
-  font-size: 1.5rem;
-  color: #1565c0;
-  font-weight: bold;
-  margin-bottom: 0.3rem;
-}
-
-.stat-label {
+dt {
+  font-weight: 600;
   color: #666;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-weight: 600;
+  margin-bottom: 0.3rem;
 }
 
-/* ===== FOOTER ===== */
+dd {
+  font-size: 1.5rem;
+  color: #1565c0;
+  font-weight: bold;
+  margin: 0;
+  padding: 1rem;
+  background: #e3f2fd;
+  border-radius: 12px;
+  text-align: center;
+}
+
+
 footer {
   background: #333;
   color: white;
   margin-top: auto;
-}
-
-.footer-content {
   text-align: center;
   padding: 2rem;
 }
 
-.footer-content p {
+footer p {
   margin-bottom: 0.5rem;
 }
 
-/* ===== RESPONSIVE DESIGN - MEDIA QUERIES ===== */
+
 @media (max-width: 768px) {
   .results-header h1 {
     font-size: 1.3rem;
@@ -408,3 +417,4 @@ footer {
     font-size: 0.85rem;
   }
 }
+

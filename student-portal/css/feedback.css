@@ -1,11 +1,11 @@
-/* ===== BASE RESET STYLES ===== */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Reset styles for consistent rendering across browsers */
+
 html {
   font-size: 16px;
   scroll-behavior: smooth;
@@ -41,7 +41,7 @@ img {
   padding: 0 20px;
 }
 
-/* ===== HEADER & NAVIGATION ===== */
+
 header {
   background: #1565c0;
   color: white;
@@ -71,62 +71,81 @@ header {
   border-radius: 8px;
 }
 
-.nav-links {
-  display: flex;
-  gap: 2rem;
-}
-
-.nav-links a {
+.navbar ul {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 300px;
+  height: 100vh;
+  background: linear-gradient(180deg, #1565c0 0%, #1976d2 100%);
   color: white;
-  font-weight: 500;
-  transition: color 0.3s;
+  transition: right 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+  padding: 4rem 0 1rem 0;
+  margin: 0;
 }
 
-.nav-links a:hover {
-  color: #ff9800;
+.navbar ul li {
+  margin: 0;
 }
 
-/* ===== NAVIGATION TOGGLE (HIDDEN CHECKBOX) ===== */
-.nav-toggle {
+.navbar ul a {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.navbar ul a:hover {
+  background: rgba(255,255,255,0.1);
+  padding-left: 2rem;
+}
+
+
+#nav-toggle {
   display: none;
 }
 
-/* ===== HAMBURGER MENU STYLES ===== */
-.hamburger-menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 24px;
-  background: none;
-  border: none;
+
+.navbar label {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: white;
   cursor: pointer;
-  padding: 0;
   z-index: 1001;
+  user-select: none;
 }
 
-.hamburger-menu span {
+.navbar label:hover {
+  color: #ff9800;
+}
+
+
+#nav-toggle:checked ~ ul {
+  right: 0;
+}
+
+
+#nav-toggle:checked ~ ul::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 3px;
-  background: white;
-  border-radius: 2px;
-  transition: all 0.3s ease;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: -1;
 }
 
-/* Hamburger animation when checked */
-.nav-toggle:checked ~ .hamburger-menu span:nth-child(1) {
-  transform: rotate(45deg) translate(8px, 8px);
-}
 
-.nav-toggle:checked ~ .hamburger-menu span:nth-child(2) {
-  opacity: 0;
-}
-
-.nav-toggle:checked ~ .hamburger-menu span:nth-child(3) {
-  transform: rotate(-45deg) translate(8px, -8px);
-}
-
-/* ===== SIDE NAVIGATION STYLES ===== */
 .side-nav {
   position: fixed;
   top: 0;
@@ -141,7 +160,7 @@ header {
   box-shadow: -2px 0 10px rgba(0,0,0,0.1);
 }
 
-/* Show side nav when checkbox is checked */
+
 .nav-toggle:checked ~ .side-nav {
   right: 0;
 }
@@ -160,14 +179,15 @@ header {
   font-weight: 600;
 }
 
-.close-btn {
-  background: none;
-  border: none;
-  color: white;
+.close-icon {
   font-size: 2rem;
   cursor: pointer;
-  padding: 0;
-  line-height: 1;
+  color: white;
+  transition: color 0.3s;
+}
+
+.close-icon:hover {
+  color: #ff9800;
 }
 
 .side-nav-links {
@@ -201,7 +221,7 @@ header {
   display: inline-block;
 }
 
-/* ===== OVERLAY STYLES ===== */
+
 .overlay {
   position: fixed;
   top: 0;
@@ -215,75 +235,104 @@ header {
   z-index: 999;
 }
 
-/* Show overlay when checkbox is checked */
+
 .nav-toggle:checked ~ .overlay {
   opacity: 1;
   visibility: visible;
 }
 
-/* ===== MAIN CONTENT ===== */
+
 .main-content {
   min-height: calc(100vh - 120px);
   padding: 2rem 0;
 }
 
-/* ===== ADMIN PAGE STYLES ===== */
-.admin-header {
-  text-align: center;
+
+.feedback-section {
+  max-width: 800px;
+  margin: 0 auto;
   padding: 2rem;
-background: #1565c0;
-  color: white;
-  margin-bottom: 2rem;
-  border-radius: 10px;
-}
-
-.admin-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.admin-card {
   background: white;
-  padding: 2rem;
   border-radius: 10px;
-  border-left: 4px solid #1565c0;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.admin-card h3 {
+.feedback-section h1 {
+  text-align: center;
   color: #1565c0;
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  font-size: 2rem;
 }
 
-.admin-actions {
+.feedback-form {
+  margin-top: 2rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
   display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+  flex-direction: column;
 }
 
-.action-btn {
+.form-group label {
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.form-group input {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #1565c0;
+}
+
+.form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 120px;
+  transition: border-color 0.3s;
+}
+
+.form-group textarea:focus {
+  outline: none;
+  border-color: #1565c0;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
   background: #1565c0;
   color: white;
-  padding: 0.5rem 1rem;
   border: none;
   border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
-.action-btn:hover {
+.submit-btn:hover {
   background: #1976d2;
 }
 
-.action-btn.secondary {
-  background: #6c757d;
-}
 
-.action-btn.secondary:hover {
-  background: #5a6268;
-}
-
-/* ===== FOOTER ===== */
 footer {
   background: #333;
   color: white;
@@ -299,20 +348,26 @@ footer {
   margin-bottom: 0.5rem;
 }
 
-/* ===== RESPONSIVE DESIGN - MEDIA QUERIES ===== */
+
 @media (max-width: 768px) {
-  /* Navigation */
+  
   .navbar {
     padding: 1rem;
   }
   
-  /* Side navigation adjustments for mobile */
+  
   .side-nav {
     width: 280px;
   }
   
-  .admin-grid {
+  
+  .form-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .feedback-section {
+    margin: 1rem;
+    padding: 1rem;
   }
 }
 
@@ -325,8 +380,5 @@ footer {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
-  .admin-actions {
-    flex-direction: column;
-  }
 }
+

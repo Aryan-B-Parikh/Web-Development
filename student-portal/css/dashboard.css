@@ -1,4 +1,4 @@
-/* ===== BASE RESET STYLES ===== */
+
 * {
   margin: 0;
   padding: 0;
@@ -40,14 +40,14 @@ img {
   padding: 0 20px;
 }
 
-/* ===== HEADER & NAVIGATION ===== */
+
 header {
   background: #1565c0;
   color: white;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.navbar {
+nav {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,12 +55,7 @@ header {
   position: relative;
 }
 
-.nav-brand h1 {
-  font-size: 1.5rem;
-  color: white;
-}
-
-.nav-brand .logo {
+nav img {
   height: 60px;
   width: auto;
   max-width: 300px;
@@ -70,62 +65,7 @@ header {
   border-radius: 8px;
 }
 
-.nav-links {
-  display: flex;
-  gap: 2rem;
-}
-
-.nav-links a {
-  color: white;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-.nav-links a:hover {
-  color: #ff9800;
-}
-
-.nav-toggle {
-  display: none;
-}
-
-.hamburger-menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 1001;
-  position: absolute;
-  right: 2rem;
-}
-
-.hamburger-menu span {
-  width: 100%;
-  height: 3px;
-  background: white;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-.nav-toggle:checked ~ .hamburger-menu span:nth-child(1) {
-  transform: rotate(45deg) translate(8px, 8px);
-}
-
-.nav-toggle:checked ~ .hamburger-menu span:nth-child(2) {
-  opacity: 0;
-}
-
-.nav-toggle:checked ~ .hamburger-menu span:nth-child(3) {
-  transform: rotate(-45deg) translate(8px, -8px);
-}
-
-/* ===== SIDE NAVIGATION STYLES ===== */
-.side-nav {
+nav ul {
   position: fixed;
   top: 0;
   right: -300px;
@@ -137,46 +77,15 @@ header {
   z-index: 1000;
   overflow-y: auto;
   box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-}
-
-.nav-toggle:checked ~ .side-nav {
-  right: 0;
-}
-
-.side-nav-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.side-nav-header h3 {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 2rem;
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
-}
-
-.side-nav-links {
-  padding: 1rem 0;
+  padding: 4rem 0 1rem 0;
   margin: 0;
 }
 
-.side-nav-links li {
+nav ul li {
   margin: 0;
 }
 
-.side-nav-links a {
+nav ul a {
   display: flex;
   align-items: center;
   padding: 1rem 1.5rem;
@@ -186,44 +95,57 @@ header {
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.side-nav-links a:hover {
+nav ul a:hover {
   background: rgba(255,255,255,0.1);
   padding-left: 2rem;
 }
 
-.side-nav-links .icon {
-  margin-right: 1rem;
-  font-size: 1.2rem;
-  width: 24px;
-  display: inline-block;
+
+#nav-toggle {
+  display: none;
 }
 
-/* ===== OVERLAY STYLES ===== */
-.overlay {
+
+nav label {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  z-index: 1001;
+  user-select: none;
+}
+
+nav label:hover {
+  color: #ff9800;
+}
+
+
+#nav-toggle:checked ~ ul {
+  right: 0;
+}
+
+
+#nav-toggle:checked ~ ul::before {
+  content: '';
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.5);
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  z-index: 999;
+  z-index: -1;
 }
 
-.nav-toggle:checked ~ .overlay {
-  opacity: 1;
-  visibility: visible;
-}
 
-/* ===== MAIN CONTENT ===== */
 .main-content {
   min-height: calc(100vh - 120px);
   padding: 2rem 0;
 }
 
-/* ===== DASHBOARD PAGE SPECIFIC STYLES ===== */
+
 .dashboard-header {
   text-align: center;
   padding: 3rem 2rem;
@@ -394,7 +316,7 @@ header {
   letter-spacing: 0.5px;
 }
 
-/* ===== FOOTER ===== */
+
 footer {
   background: #333;
   color: white;
@@ -410,14 +332,14 @@ footer {
   margin-bottom: 0.5rem;
 }
 
-/* ===== RESPONSIVE DESIGN - MEDIA QUERIES ===== */
+
 @media (max-width: 768px) {
-  /* Navigation */
+  
   .navbar {
     padding: 1rem;
   }
   
-  /* Side navigation adjustments for mobile */
+  
   .side-nav {
     width: 280px;
   }
@@ -481,3 +403,4 @@ footer {
     font-size: 0.8rem;
   }
 }
+
