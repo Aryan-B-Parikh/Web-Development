@@ -8,6 +8,7 @@
 /* Reset styles for consistent rendering across browsers */
 html {
   font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -44,13 +45,15 @@ img {
 header {
   background: #1565c0;
   color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 1rem 2rem;
+  position: relative;
 }
 
 .nav-brand h1 {
@@ -59,13 +62,13 @@ header {
 }
 
 .nav-brand .logo {
-  height: 40px;
+  height: 60px;
   width: auto;
-  max-width: 200px;
+  max-width: 300px;
   object-fit: contain;
   background-color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 8px 15px;
+  border-radius: 8px;
 }
 
 .nav-links {
@@ -76,6 +79,7 @@ header {
 .nav-links a {
   color: white;
   font-weight: 500;
+  transition: color 0.3s;
 }
 
 .nav-links a:hover {
@@ -99,6 +103,8 @@ header {
   cursor: pointer;
   padding: 0;
   z-index: 1001;
+  position: absolute;
+  right: 2rem;
 }
 
 .hamburger-menu span {
@@ -106,6 +112,7 @@ header {
   height: 3px;
   background: white;
   border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
 /* Hamburger animation when checked */
@@ -128,10 +135,12 @@ header {
   right: -300px;
   width: 300px;
   height: 100vh;
-background: #1565c0;
+  background: linear-gradient(180deg, #1565c0 0%, #1976d2 100%);
   color: white;
+  transition: right 0.3s ease;
   z-index: 1000;
   overflow-y: auto;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
 }
 
 /* Show side nav when checkbox is checked */
@@ -204,6 +213,8 @@ background: #1565c0;
   background: rgba(0,0,0,0.5);
   opacity: 0;
   visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
 }
 
 /* Show overlay when checkbox is checked */
