@@ -1,13 +1,14 @@
-/* ===== BASE RESET STYLES ===== */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Reset styles for consistent rendering across browsers */
+
 html {
   font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -40,100 +41,119 @@ img {
   padding: 0 20px;
 }
 
-/* ===== HEADER & NAVIGATION ===== */
+
 header {
   background: #1565c0;
   color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.navbar {
+nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 1rem 2rem;
+  position: relative;
 }
 
-.nav-brand h1 {
-  font-size: 1.5rem;
-  color: white;
-}
-
-.nav-brand .logo {
-  height: 40px;
+nav img {
+  height: 60px;
   width: auto;
-  max-width: 200px;
+  max-width: 300px;
   object-fit: contain;
   background-color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 8px 15px;
+  border-radius: 8px;
 }
 
-.nav-links {
-  display: flex;
-  gap: 2rem;
-}
-
-.nav-links a {
-  color: white;
-  font-weight: 500;
-}
-
-.nav-links a:hover {
-  color: #ff9800;
-}
-
-/* ===== NAVIGATION TOGGLE (HIDDEN CHECKBOX) ===== */
-.nav-toggle {
-  display: none;
-}
-
-/* ===== HAMBURGER MENU STYLES ===== */
-.hamburger-menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.hamburger-menu span {
-  width: 100%;
-  height: 3px;
-  background: white;
-  border-radius: 2px;
-}
-
-/* Hamburger animation when checked */
-.nav-toggle:checked ~ .hamburger-menu span:nth-child(1) {
-  
-}
-
-.nav-toggle:checked ~ .hamburger-menu span:nth-child(2) {
-  
-}
-
-.nav-toggle:checked ~ .hamburger-menu span:nth-child(3) {
-  
-}
-
-/* ===== SIDE NAVIGATION STYLES ===== */
-.side-nav {
+nav ul {
   position: fixed;
   top: 0;
   right: -300px;
   width: 300px;
   height: 100vh;
-background: #1565c0;
+  background: linear-gradient(180deg, #1565c0 0%, #1976d2 100%);
   color: white;
+  transition: right 0.3s ease;
+  z-index: 1000;
   overflow-y: auto;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+  padding: 4rem 0 1rem 0;
+  margin: 0;
 }
 
-/* Show side nav when checkbox is checked */
-.nav-toggle:checked ~ .side-nav {
+nav ul li {
+  margin: 0;
+}
+
+nav ul a {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+nav ul a:hover {
+  background: rgba(255,255,255,0.1);
+  padding-left: 2rem;
+}
+
+
+#nav-toggle {
+  display: none;
+}
+
+
+nav label {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  z-index: 1001;
+  user-select: none;
+}
+
+nav label:hover {
+  color: #ff9800;
+}
+
+
+#nav-toggle:checked ~ ul {
+  right: 0;
+}
+
+
+#nav-toggle:checked ~ ul::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: -1;
+}
+
+
+.side-nav {
+  position: fixed;
+  top: 0;
+  right: -280px;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(180deg, #1565c0, #1976d2);
+  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+  z-index: 999;
+  transition: right 0.3s ease;
+}
+
+#nav-toggle:checked ~ .side-nav {
   right: 0;
 }
 
@@ -141,85 +161,69 @@ background: #1565c0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.side-nav-header h3 {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  color: white;
+.close-icon {
   font-size: 2rem;
   cursor: pointer;
-  padding: 0;
-  line-height: 1;
+  color: white;
+  transition: color 0.3s;
+}
+
+.close-icon:hover {
+  color: #ff9800;
 }
 
 .side-nav-links {
   padding: 1rem 0;
-  margin: 0;
-}
-
-.side-nav-links li {
-  margin: 0;
 }
 
 .side-nav-links a {
-  display: flex;
-  align-items: center;
+  display: block;
   padding: 1rem 1.5rem;
   color: white;
   text-decoration: none;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .side-nav-links a:hover {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.side-nav-links .icon {
-  margin-right: 1rem;
-  font-size: 1.2rem;
-  width: 24px;
-  display: inline-block;
-}
 
-/* ===== OVERLAY STYLES ===== */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   opacity: 0;
   visibility: hidden;
-  z-index: 999;
+  transition: opacity 0.3s ease;
+  z-index: 998;
 }
 
-/* Show overlay when checkbox is checked */
-.nav-toggle:checked ~ .overlay {
+#nav-toggle:checked ~ .overlay {
   opacity: 1;
   visibility: visible;
 }
 
-/* ===== MAIN CONTENT ===== */
+
+
 .main-content {
   min-height: calc(100vh - 120px);
   padding: 2rem 0;
 }
 
-/* ===== ADMIN PAGE STYLES ===== */
+
 .admin-header {
   text-align: center;
   padding: 2rem;
-background: #1565c0;
+  background: #1565c0;
   color: white;
   margin-bottom: 2rem;
   border-radius: 10px;
@@ -271,7 +275,7 @@ background: #1565c0;
   background: #5a6268;
 }
 
-/* ===== FOOTER ===== */
+
 footer {
   background: #333;
   color: white;
@@ -287,17 +291,21 @@ footer {
   margin-bottom: 0.5rem;
 }
 
-/* ===== RESPONSIVE DESIGN - MEDIA QUERIES ===== */
+
 @media (max-width: 768px) {
-  /* Navigation */
-  .navbar {
+  
+  nav ul {
+    display: none;
+  }
+  
+  label[for="nav-toggle"] {
+    display: block;
+  }
+  
+  nav {
     padding: 1rem;
   }
   
-  /* Side navigation adjustments for mobile */
-  .side-nav {
-    width: 280px;
-  }
   
   .admin-grid {
     grid-template-columns: 1fr;
@@ -305,16 +313,16 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .navbar {
-    padding: 0.5rem;
-  }
-  
-  .nav-links {
-    flex-direction: column;
-    gap: 0.5rem;
+  nav {
+    padding: 0.5rem 1rem;
   }
   
   .admin-actions {
     flex-direction: column;
   }
+  
+  .admin-header {
+    padding: 1rem;
+  }
 }
+
