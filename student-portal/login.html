@@ -24,7 +24,7 @@
     <main>
         <section>
             <h2>Login to CHARUSAT Portal</h2>
-            <form action="dashboard.html" method="get">
+            <div>
                 <fieldset>
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required>
@@ -32,8 +32,9 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" required>
                     
-                    <button type="submit">Login</button>
+                    <button type="button" onclick="checkusername()">Login</button>
                 </fieldset>
+            </div>
             </form>
             <p><a href="#">Forgot Password?</a></p>
         </section>
@@ -41,6 +42,7 @@
     <footer>
         <p>&copy; 2025 CHARUSAT Student Portal. All rights reserved.</p>
     </footer>
+    <script src="JS/login.js"></script>
 </body>
 </html>
 
