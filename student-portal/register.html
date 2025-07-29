@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - CHARUSAT Student Portal</title>
     <link rel="stylesheet" href="css/register.css">
 </head>
+
 <body>
     <header>
         <nav>
@@ -25,29 +27,48 @@
     <main>
         <section>
             <h1>Register at CHARUSAT</h1>
-            <form>
+            <form onsubmit="return validateForm()">
                 <fieldset>
-                    <label for="first-name">First Name</label>
-                    <input type="text" id="first-name" required>
-                    
-                    <label for="last-name">Last Name</label>
-                    <input type="text" id="last-name" required>
-                    
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                    
-                    <label for="contact">Contact No.</label>
-                    <input type="tel" id="contact" required>
-                    
-                    <label for="password">Password</label>
-                    <input type="password" id="password" required>
-                    
-                    <label for="confirm-password">Confirm Password</label>
-                    <input type="password" id="confirm-password" required>
-                    
-                    <button type="submit">Register</button>
+                    <label for="fullname">Student Full Name:</label>
+                    <input type="text" id="fullname" required onclick="clearError('fullname')"
+                        onblur="validateField('fullname')" />
+                    <span id="fullname-error" class="error"></span>
+
+                    <label for="studentid">Student ID:</label>
+                    <input type="text" id="studentid" required onclick="clearError('studentid')"
+                        onblur="validateField('studentid')" />
+                    <span id="studentid-error" class="error"></span>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required onclick="clearError('email')"
+                        onblur="validateField('email')" />
+                    <span id="email-error" class="error"></span>
+
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required onclick="clearError('username')"
+                        onblur="validateField('username')" />
+                    <span id="username-error" class="error"></span>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required onclick="clearError('password')"
+                        onblur="validateField('password')" />
+                    <span id="password-error" class="error"></span>
+
+                    <label for="confirmpassword">Confirm Password:</label>
+                    <input type="password" id="confirmpassword" required onclick="clearError('confirmpassword')"
+                        onblur="validateField('confirmpassword')" />
+                    <span id="confirmpassword-error" class="error"></span>
+
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" required onclick="clearError('phone')"
+                        onblur="validateField('phone')" />
+                    <span id="phone-error" class="error"></span>
+
+                    <button type="submit">Submit</button>
                 </fieldset>
             </form>
+
+            <div id="result"></div>
         </section>
     </main>
 
@@ -55,7 +76,8 @@
         <p>© 2025 CHARUSAT Student Portal. All rights reserved.</p>
         <p>Charotar University of Science and Technology</p>
     </footer>
+
+    <script src="js/register.js"></script>
 </body>
+
 </html>
-
-

@@ -1,13 +1,7 @@
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
 }
 
 body {
@@ -19,21 +13,6 @@ body {
   display: flex;
   flex-direction: column;
 }
-
-ul {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
 
 header {
   background: #1565c0;
@@ -94,11 +73,9 @@ nav ul a:hover {
   padding-left: 2rem;
 }
 
-
 #nav-toggle {
   display: none;
 }
-
 
 nav label {
   position: absolute;
@@ -116,23 +93,9 @@ nav label:hover {
   color: #ff9800;
 }
 
-
 #nav-toggle:checked ~ ul {
   right: 0;
 }
-
-
-#nav-toggle:checked ~ ul::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: -1;
-}
-
 
 main {
   display: flex;
@@ -157,7 +120,6 @@ main section h1 {
   margin-bottom: 1.5rem;
   font-size: 2rem;
 }
-
 
 fieldset {
   border: none;
@@ -185,11 +147,24 @@ fieldset input {
   font-size: 1rem;
   transition: border-color 0.3s;
   box-sizing: border-box;
+  margin-bottom: 5px;
 }
 
 fieldset input:focus {
   outline: none;
   border-color: #1565c0;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.error-highlight {
+  background-color: #ffebee !important;
+  border-color: red !important;
 }
 
 fieldset button {
@@ -210,6 +185,13 @@ fieldset button:hover {
   background: #1976d2;
 }
 
+#result {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 5px;
+  display: none;
+}
 
 footer {
   background: #333;
@@ -222,7 +204,6 @@ footer {
 footer p {
   margin-bottom: 0.5rem;
 }
-
 
 @media (max-width: 768px) {
   nav {
@@ -253,4 +234,3 @@ footer p {
     margin: 0.5rem;
   }
 }
-
