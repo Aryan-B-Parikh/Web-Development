@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calci</title>
+</head>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 60px;
+    }
+    .calculator {
+        display: inline-block;
+        border: 2px solid #444;
+        border-radius: 10px;
+        padding: 20px;
+    }
+    input[type="text"] {
+        width: 220px;
+        height: 40px;
+        font-size: 18px;
+        margin-bottom: 10px;
+        text-align: right;
+    }
+    .btn {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+        margin: 5px;
+        cursor: pointer;
+    }
+    .btn-operator {
+        background-color: #f0ad4e;
+    }
+    .btn-equal {
+        background-color: #5cb85c;
+        color: white;
+    }
+    .btn-clear {
+        background-color: #d9534f;
+        color: white;
+    }
+</style>
+
+<body>
+    <div class="calculator">
+        <input type="text" id="display" disabled />
+        <br />
+        <button class="btn" onclick="append('0')">0</button>
+        <button class="btn" onclick="append('1')">1</button>
+        <button class="btn" onclick="append('2')">2</button>
+        <button class="btn" onclick="append('3')">3</button>
+        <button class="btn" onclick="append('4')">4</button>
+        <button class="btn" onclick="append('5')">5</button>
+        <button class="btn" onclick="append('6')">6</button>
+        <button class="btn" onclick="append('7')">7</button>
+        <button class="btn" onclick="append('8')">8</button>
+        <button class="btn" onclick="append('9')">9</button>
+        <button class="btn" onclick="append('.')">.</button>
+        <br>
+        <button class="btn btn-operator" onclick="append('/')">÷</button>
+        <button class="btn btn-operator" onclick="append('*')">×</button>
+        <button class="btn btn-operator" onclick="append('-')">−</button>
+        <button class="btn btn-operator" onclick="append('+')">+</button>
+        <br />
+        <button class="btn btn-equal" onclick="calculate()">=</button>
+        <button class="btn btn-clear" onclick="clearDisplay()">C</button>
+    </div>
+
+    <script>
+        function append(value) {
+            document.getElementById("display").value += value;
+        }
+
+        // Custom tokenizer to break expression into tokens
+        function tokenize(expression) {
+            const tokens = [];
+            let currentToken = '';
+            
+            for (let i = 0; i < expression.length; i++) {
+                const char = expression[i];
+                
+                if (char === ' ') {
+                    continue; // Skip whitespace
+                }
+                
+                if (['+', '-', '*', '/'].includes(char)) {
+                    if (currentToken) {
+                        tokens.push(currentToken);
+                        currentToken = '';
+                    }
+                    tokens.push(char);
+                } else {
+                    currentToken += char;
+                }
+            }
+            
+            if (currentToken) {
+                tokens.push(currentToken);
+            }
+            
+            return tokens;
+        }
+
+        // Custom expression evaluator using operator precedence
+        function customEval(expression) {
+            const tokens = tokenize(expression);
+            
+            if (tokens.length === 0) return 0;
+            if (tokens.length === 1) return parseFloat(tokens[0]);
+            
+            // Convert to postfix notation (Reverse Polish Notation)
+            const postfix = infixToPostfix(tokens);
+            
+            // Evaluate postfix expression
+            return evaluatePostfix(postfix);
+        }
+
+        // Convert infix to postfix notation
+        function infixToPostfix(tokens) {
+            const precedence = { '+': 1, '-': 1, '*': 2, '/': 2 };
+            const output = [];
+            const operators = [];
+            
+            for (let token of tokens) {
+                if (!isNaN(parseFloat(token))) {
+                    // Token is a number
+                    output.push(parseFloat(token));
+                } else if (['+', '-', '*', '/'].includes(token)) {
+                    // Token is an operator
+                    while (operators.length > 0 && 
+                           precedence[operators[operators.length - 1]] >= precedence[token]) {
+                        output.push(operators.pop());
+                    }
+                    operators.push(token);
+                }
+            }
+            
+            // Pop remaining operators
+            while (operators.length > 0) {
+                output.push(operators.pop());
+            }
+            
+            return output;
+        }
+
+        // Evaluate postfix expression
+        function evaluatePostfix(postfix) {
+            const stack = [];
+            
+            for (let token of postfix) {
+                if (typeof token === 'number') {
+                    stack.push(token);
+                } else {
+                    const b = stack.pop();
+                    const a = stack.pop();
+                    
+                    switch (token) {
+                        case '+':
+                            stack.push(a + b);
+                            break;
+                        case '-':
+                            stack.push(a - b);
+                            break;
+                        case '*':
+                            stack.push(a * b);
+                            break;
+                        case '/':
+                            if (b === 0) throw new Error('Division by zero');
+                            stack.push(a / b);
+                            break;
+                    }
+                }
+            }
+            
+            return stack[0];
+        }
+
+        function calculate() {
+            const display = document.getElementById("display");
+            try {
+                const result = customEval(display.value);
+                display.value = result;
+            } catch (e) {
+                display.value = "Error";
+            }
+        }
+
+        function clearDisplay() {
+            document.getElementById("display").value = "";
+        }
+    </script>
+</body>
+</html>
