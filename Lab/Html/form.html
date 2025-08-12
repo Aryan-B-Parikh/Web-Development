@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Object Creation Methods in JavaScript</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f8fc;
+      padding: 20px;
+    }
+    h1 {
+      color: #1565c0;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #d0d7de;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border: 1px solid #c0c8d1;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      width: 100%;
+      background: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover {
+      background: #0d47a1;
+    }
+    #output {
+      margin-top: 25px;
+      background: white;
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      padding: 15px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    #output h2 {
+      margin-top: 0;
+      color: #1565c0;
+    }
+    #output p {
+      background: #f0f6ff;
+      padding: 6px;
+      border-radius: 4px;
+      margin: 6px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Create Objects Using Different Methods</h1>
+
+  <form onsubmit="createObjects(); return false;">
+    <label>Name:
+      <input type="text" id="name" required>
+    </label>
+    <label>Roll Number:
+      <input type="text" id="roll" required>
+    </label>
+    <label>Course:
+      <input type="text" id="course" required>
+    </label>
+    <label>Year:
+      <input type="number" id="year" required min="1">
+    </label>
+    <button type="submit">Create Objects</button>
+  </form>
+
+  <div id="output"></div>
+
+  <script>
+    function createObjects() {
+      let name = document.getElementById("name").value.trim();
+      let roll = document.getElementById("roll").value.trim();
+      let course = document.getElementById("course").value.trim();
+      let year = document.getElementById("year").value.trim();
+
+      let objLiteral = {
+        name: name,
+        roll: roll,
+        course: course,
+        year: year,
+        showInfo: function() {
+          return `Object Literal → Name: ${this.name}, Roll: ${this.roll}, Course: ${this.course}, Year: ${this.year}`;
+        }
+      };
+
+      let objNew = new Object();
+      objNew.name = name;
+      objNew.roll = roll;
+      objNew.course = course;
+      objNew.year = year;
+      objNew.showInfo = function() {
+        return `new Object() → Name: ${this.name}, Roll: ${this.roll}, Course: ${this.course}, Year: ${this.year}`;
+      };
+
+      function StudentCF(name, roll, course, year) {
+        this.name = name;
+        this.roll = roll;
+        this.course = course;
+        this.year = year;
+        this.showInfo = function() {
+          return `Constructor Function → Name: ${this.name}, Roll: ${this.roll}, Course: ${this.course}, Year: ${this.year}`;
+        };
+      }
+      let objCF = new StudentCF(name, roll, course, year);
+
+      class StudentClass {
+        constructor(name, roll, course, year) {
+          this.name = name;
+          this.roll = roll;
+          this.course = course;
+          this.year = year;
+        }
+        showInfo() {
+          return `ES6 Class → Name: ${this.name}, Roll: ${this.roll}, Course: ${this.course}, Year: ${this.year}`;
+        }
+      }
+      let objClass = new StudentClass(name, roll, course, year);
+
+      document.getElementById("output").innerHTML =
+        `<h2>Created Objects</h2>
+         <p>${objLiteral.showInfo()}</p>
+         <p>${objNew.showInfo()}</p>
+         <p>${objCF.showInfo()}</p>
+         <p>${objClass.showInfo()}</p>`;
+
+      console.log("Object Literal:", objLiteral);
+      console.log("new Object():", objNew);
+      console.log("Constructor Function:", objCF);
+      console.log("ES6 Class:", objClass);
+
+      document.querySelector("form").reset();
+    }
+  </script>
+</body>
+</html>
