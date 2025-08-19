@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    /* FAQ Section */
+    .faq-item {
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .faq-question {
+      background: #f0f0f0;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 10px;
+      background: #fff;
+    }
+
+    /* Popup Banner */
+    .popup {
+      position: fixed;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #007bff;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 5px;
+      transition: top 0.5s ease;
+      z-index: 1000;
+    }
+
+    .popup.show {
+      top: 20px;
+    }
+
+    /* Image Slider */
+    .slider {
+      position: relative;
+      max-width: 500px;
+      margin: 30px auto;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slides img {
+      width: 500px;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Dynamic Content Demo</h1>
+
+  <!-- FAQ Section -->
+  <h2>📌 Frequently Asked Questions</h2>
+  <div class="faq-item">
+    <div class="faq-question">What is DOM?</div>
+    <div class="faq-answer">DOM stands for Document Object Model. It represents the page so programs can change the structure, style, and content.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">What is Event Handling?</div>
+    <div class="faq-answer">Event handling refers to writing code that responds to user actions such as clicks, key presses, or hovers.</div>
+  </div>
+
+  <!-- Popup Banner -->
+  <div id="popup" class="popup">✅ Notification: This is a popup banner!</div>
+  <button id="showPopup">Show Notification</button>
+
+  <!-- Image Slider -->
+  <h2>🖼️ Image Slider</h2>
+  <div class="slider">
+    <div class="slides" id="slides">
+      <img src="https://picsum.photos/id/1015/500/300" alt="Slide 1">
+      <img src="https://picsum.photos/id/1016/500/300" alt="Slide 2">
+      <img src="https://picsum.photos/id/1018/500/300" alt="Slide 3">
+    </div>
+    <button class="slider-btn prev" id="prev">&#10094;</button>
+    <button class="slider-btn next" id="next">&#10095;</button>
+  </div>
+
+  <script>
+    // FAQ Toggle
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        answer.style.display = (answer.style.display === "block") ? "none" : "block";
+      });
+    });
+
+    // Popup Notification
+    const popup = document.getElementById('popup');
+    const btn = document.getElementById('showPopup');
+
+    btn.addEventListener('click', () => {
+      popup.classList.add('show');
+      setTimeout(() => {
+        popup.classList.remove('show');
+      }, 3000); // auto-hide after 3 sec
+    });
+
+    // Image Slider
+    const slides = document.getElementById('slides');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    let index = 0;
+
+    function showSlide(i) {
+      index += i;
+      if (index < 0) index = slides.children.length - 1;
+      if (index >= slides.children.length) index = 0;
+      slides.style.transform = `translateX(${-index * 500}px)`;
+    }
+
+    prevBtn.addEventListener('click', () => showSlide(-1));
+    nextBtn.addEventListener('click', () => showSlide(1));
+
+    // Auto-slide every 4s
+    setInterval(() => showSlide(1), 4000);
+  </script>
+</body>
+</html>
