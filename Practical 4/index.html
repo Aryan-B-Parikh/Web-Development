@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dynamic Portal Page</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Notification Banner -->
+  <div id="notification" class="notification hidden">
+    Welcome! You have new updates.
+  </div>
+
+  <!-- Buttons to trigger actions -->
+  <button id="showNotification">Show Notification</button>
+  <button id="openPopup">Open Popup</button>
+
+  <!-- Frequently Asked Questions -->
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-container">
+    <div class="faq">
+      <button class="faq-toggle">What is JavaScript?</button>
+      <div class="faq-content">
+        <p>JavaScript is a programming language that makes web pages interactive. It runs in the browser and can update content without reloading the page.</p>
+      </div>
+    </div>
+    <div class="faq">
+      <button class="faq-toggle">How does the DOM work?</button>
+      <div class="faq-content">
+        <p>The DOM (Document Object Model) is a tree-like structure of your HTML. JavaScript can select and change elements in the DOM to create dynamic effects.</p>
+      </div>
+    </div>
+    <div class="faq">
+      <button class="faq-toggle">What is an event listener?</button>
+      <div class="faq-content">
+        <p>An event listener waits for actions like clicks or keypresses and runs code when they happen.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Slider -->
+  <h2>Image Slider</h2>
+  <div class="slider">
+    <button id="prev">❮</button>
+    <img id="slide" src="https://picsum.photos/seed/1/600/300" alt="Slide">
+    <button id="next">❯</button>
+  </div>
+
+  <!-- Popup Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Welcome to the Portal!</h3>
+      <p>This popup can be closed by clicking the X or clicking outside.</p>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
