@@ -1,21 +1,17 @@
-// Wait for the page to fully load before running JavaScript
 document.addEventListener("DOMContentLoaded", function () {
 
-  // =============== NOTIFICATION ===============
   const notification = document.getElementById("notification");
   const showNotificationBtn = document.getElementById("showNotification");
 
   if (showNotificationBtn && notification) {
     showNotificationBtn.addEventListener("click", function () {
       notification.classList.remove("hidden");
-      // Auto-hide after 3 seconds
       setTimeout(() => {
         notification.classList.add("hidden");
       }, 3000);
     });
   }
 
-  // =============== COLLAPSIBLE FAQS ===============
   const faqToggles = document.querySelectorAll(".faq-toggle");
 
   faqToggles.forEach(button => {
@@ -25,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // =============== IMAGE SLIDER ===============
   const slide = document.getElementById("slide");
   const prevBtn = document.getElementById("prev");
   const nextBtn = document.getElementById("next");
@@ -58,33 +53,27 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Show first image
   updateSlide();
 
-  // =============== MODAL POPUP ===============
   const modal = document.getElementById("modal");
   const openPopupBtn = document.getElementById("openPopup");
   const closeBtn = document.querySelector(".close");
 
-  // Open modal
   if (openPopupBtn && modal) {
     openPopupBtn.addEventListener("click", () => {
       modal.classList.remove("hidden");
     });
   }
 
-  // Close modal with X
   if (closeBtn && modal) {
     closeBtn.addEventListener("click", () => {
       modal.classList.add("hidden");
     });
   }
 
-  // Close modal when clicking outside the box
   window.addEventListener("click", (event) => {
     if (modal && event.target === modal) {
       modal.classList.add("hidden");
     }
   });
-
 });
