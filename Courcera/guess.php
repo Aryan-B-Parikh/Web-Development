@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Guessing Game -Aryan Parikh e8d21e55</title>
+    <title>Aryan Parikh e8d21e55</title>
 </head>
 <body>
 <h1>Welcome to my guessing game</h1>
 <?php
-
-// The correct answer
 $correct = 17;
 
 // Check if 'guess' parameter exists
@@ -42,7 +40,6 @@ if ($guess < $correct) {
 } else {
     echo "Congratulations - You are right";
 }
-
 ?>
 </body>
 </html>
