@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grading System</title>
+</head>
+<body>
+    <script>
+        function Grading() {
+            // Get the value from the input and convert it to a number
+            let marks = Number(document.getElementById("marks").value);
+            if (marks >= 90) {
+                document.getElementById("Grade").innerHTML = "Grade A";
+            }
+            else if(marks >= 70) {
+                document.getElementById("Grade").innerHTML = "Grade B";
+            }
+            else if(marks >= 60) {
+                document.getElementById("Grade").innerHTML = "Grade C";
+            }
+            else if(marks >= 50) {
+                document.getElementById("Grade").innerHTML = "Grade D";
+            }
+            else {
+                document.getElementById("Grade").innerHTML = "Grade F";
+            }
+        }
+    </script>
+    <p>Enter Marks :</p>
+    <input type="text" id="marks" />
+    <button type="button" onclick="Grading()">Submit</button>
+    <p id="Grade"></p>
+</body>
+</html>
