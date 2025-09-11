@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p id="text"></p>
+    <p id="mul"></p>
+    <script>
+        window.alert("Opening File!");
+        window.confirm("Want to open?");
+        let num = window.prompt("Enter a number");
+        if(num % 5 == 0)
+    {
+        document.getElementById("mul").innerHTML="Multiple of 5 enterd";
+    }
+        else
+    {
+        document.getElementById("mul").innerHTML="Multiple of 5 not enterd";
+    }
+        let text = "";
+        for (let i = 0; i < 6; i++) {
+            text += "The number is : " + i + "<br>";
+        }
+        document.getElementById("text").innerHTML = text;
+    </script>
+</body>
+
+</html>
