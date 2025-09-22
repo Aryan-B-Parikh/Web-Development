@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events & Student Profiles - Dynamic Data Rendering</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Events & Student Profiles</h1>
+        <p style="text-align: center; color: #7f8c8d; margin-bottom: 30px;">
+            Dynamic Data Rendering with JSON Parsing and Modular JavaScript
+        </p>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="total-events">0</div>
+                <div class="stat-label">Total Events</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-students">0</div>
+                <div class="stat-label">Total Students</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📅 Upcoming Events</h2>
+            <div class="controls">
+                <div class="items-per-page">
+                    <label>Items per page:</label>
+                    <select id="events-per-page">
+                        <option value="2">2</option>
+                        <option value="3" selected>3</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="pagination">
+                    <button id="events-prev">← Previous</button>
+                    <span class="page-info" id="events-page-info">Page 1 of 1</span>
+                    <button id="events-next">Next →</button>
+                </div>
+            </div>
+            <div class="grid" id="events-grid"></div>
+            
+            <button class="json-toggle" onclick="toggleJSON('events')">Show Events JSON</button>
+            <div class="json-viewer" id="events-json" style="display: none;"></div>
+        </div>
+
+        <div class="section">
+            <h2>👥 Student Profiles</h2>
+            <div class="controls">
+                <div class="items-per-page">
+                    <label>Items per page:</label>
+                    <select id="students-per-page">
+                        <option value="2">2</option>
+                        <option value="3" selected>3</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="pagination">
+                    <button id="students-prev">← Previous</button>
+                    <span class="page-info" id="students-page-info">Page 1 of 1</span>
+                    <button id="students-next">Next →</button>
+                </div>
+            </div>
+            <div class="grid" id="students-grid"></div>
+            
+            <button class="json-toggle" onclick="toggleJSON('students')">Show Students JSON</button>
+            <div class="json-viewer" id="students-json" style="display: none;"></div>
+        </div>
+
+        <footer>
+            <p><strong>Learning Outcome:</strong> Understanding modular JavaScript and data handling through JSON parsing</p>
+            <p><strong>Key Skills:</strong> Objects, JSON, Loops, Array Manipulation, DOM Manipulation</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

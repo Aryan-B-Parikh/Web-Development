@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form - PHP Data Handling</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Student Registration Form</h1>
+            <p class="subtitle">PHP Form Handling with Data Storage & Input Sanitization</p>
+        </header>
+
+        <div class="form-container">
+            <form action="process_registration.php" method="POST" class="registration-form">
+                <div class="form-group">
+                    <label for="fullname">Full Name *</label>
+                    <input type="text" id="fullname" name="fullname" required>
+                    <span class="error-message" id="fullname-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentid">Student ID *</label>
+                    <input type="text" id="studentid" name="studentid" required>
+                    <span class="error-message" id="studentid-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="error-message" id="email-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                    <span class="error-message" id="phone-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="major">Major/Course *</label>
+                    <select id="major" name="major" required>
+                        <option value="">Select your major</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Artificial Intelligence">Artificial Intelligence</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Information Technology">Information Technology</option>
+                        <option value="Business Administration">Business Administration</option>
+                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                        <option value="Electrical Engineering">Electrical Engineering</option>
+                    </select>
+                    <span class="error-message" id="major-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="year">Academic Year *</label>
+                    <select id="year" name="year" required>
+                        <option value="">Select year</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                    <span class="error-message" id="year-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" rows="3" placeholder="Enter your complete address"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob">
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to the Terms and Conditions *</label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">Register Student</button>
+                    <button type="reset" class="btn-reset">Clear Form</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="info-section">
+            <h3>Form Features Demonstrated:</h3>
+            <ul>
+                <li><strong>POST Method:</strong> Secure data transmission</li>
+                <li><strong>Input Sanitization:</strong> XSS and injection prevention</li>
+                <li><strong>Data Validation:</strong> Server-side validation</li>
+                <li><strong>File Storage:</strong> Registration data persistence</li>
+                <li><strong>Error Handling:</strong> Comprehensive error responses</li>
+            </ul>
+        </div>
+
+        <div class="navigation">
+            <a href="view_registrations.php" class="btn-view">View All Registrations</a>
+            <a href="search.php" class="btn-search">Search Registrations</a>
+        </div>
+
+        <footer>
+            <p><strong>Learning Outcome:</strong> Understanding PHP form handling, data storage, and input sanitization</p>
+            <p><strong>Key Skills:</strong> PHP POST/GET, Input Sanitization, File Operations, Error Handling</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
