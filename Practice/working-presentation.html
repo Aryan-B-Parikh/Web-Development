@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working Network Routing Simulation</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            min-height: 100vh;
+        }
+        
+        #app { 
+            display: flex; 
+            height: 100vh; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            background: white; 
+            box-shadow: 0 0 50px rgba(0,0,0,0.2); 
+        }
+        
+        .canvas-wrap { 
+            flex: 2; 
+            background: linear-gradient(180deg, #f8fffe, #f0f9ff); 
+            position: relative; 
+            overflow: hidden; 
+            border-right: 1px solid #e2e8f0; 
+        }
+        
+        .controls { 
+            flex: 0.8; 
+            background: linear-gradient(180deg, #ffffff, #f6fbff); 
+            border-radius: 12px; 
+            padding: 16px; 
+            overflow: auto; 
+            box-shadow: 0 6px 24px rgba(10,20,40,0.06); 
+        }
+        
+        .controls h3 { 
+            margin: 6px 0 10px; 
+            font-size: 16px; 
+            color: #102633; 
+        }
+        
+        button { 
+            width: 100%; 
+            padding: 10px 12px; 
+            margin: 4px 0; 
+            border: none; 
+            border-radius: 8px; 
+            background: #4f46e5; 
+            color: white; 
+            font-weight: 500; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+        }
+        
+        button:hover { 
+            background: #4338ca; 
+            transform: translateY(-1px); 
+        }
+        
+        .btn-accent { 
+            background: #f59e0b; 
+        }
+        
+        .btn-accent:hover { 
+            background: #d97706; 
+        }
+        
+        .btn-ghost { 
+            background: #6b7280; 
+        }
+        
+        .btn-ghost:hover { 
+            background: #4b5563; 
+        }
+        
+        input, select { 
+            width: 100%; 
+            padding: 8px; 
+            margin: 4px 0; 
+            border: 1px solid #d1d5db; 
+            border-radius: 6px; 
+            box-sizing: border-box; 
+        }
+        
+        label { 
+            display: block; 
+            margin-top: 8px; 
+            font-size: 13px; 
+            color: #374151; 
+            font-weight: 500; 
+        }
+        
+        .routing-box { 
+            background: #f3f4f6; 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin-top: 12px; 
+            border-left: 4px solid #3b82f6; 
+        }
+        
+        .node { 
+            position: absolute; 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%; 
+            background: #4ecdc4; 
+            border: 3px solid #fff; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: white; 
+            font-weight: bold; 
+            cursor: pointer; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+            transition: all 0.3s; 
+            z-index: 10; 
+        }
+        
+        .node:hover { 
+            transform: scale(1.1); 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25); 
+        }
+        
+        .node.highlighted { 
+            background: #ff6b6b; 
+            animation: pulse 1s infinite; 
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .edge { 
+            position: absolute; 
+            background: #95a5a6; 
+            height: 3px; 
+            transform-origin: left center; 
+            z-index: 5; 
+            transition: all 0.3s; 
+        }
+        
+        .edge.highlighted { 
+            background: #ff6b6b; 
+            height: 5px; 
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5); 
+        }
+        
+        .edge-weight { 
+            position: absolute; 
+            background: white; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+            font-size: 11px; 
+            font-weight: bold; 
+            border: 1px solid #ddd; 
+            transform: translate(-50%, -50%); 
+            z-index: 15; 
+        }
+        
+        .hint { 
+            font-size: 11px; 
+            color: #6b7280; 
+            margin-top: 8px; 
+            line-height: 1.4; 
+        }
+        
+        #pathInfo { 
+            margin-top: 10px; 
+            padding: 8px; 
+            background: #ecfdf5; 
+            border-radius: 6px; 
+            font-size: 12px; 
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="canvas-wrap" id="canvasWrap">
+            <!-- Network visualization appears here -->
+        </div>
+        
+        <div class="controls">
+            <h3>🌐 Network Topology Generation</h3>
+            <button onclick="generateStarTopology()" class="btn-accent">Generate Star Network</button>
+            <button onclick="generateMeshTopology()" class="btn-accent">Generate Mesh Network</button>
+            <button onclick="generateHybridTopology()" class="btn-accent">Generate Hybrid Network</button>
+            <button onclick="clearCanvas()" class="btn-ghost">Clear Network</button>
+            
+            <h3>🔍 Routing Algorithms</h3>
+            <label>Source Node</label>
+            <input id="sourceNode" type="text" placeholder="Enter source (e.g., A, Center)" />
+            <label>Destination Node</label>
+            <input id="destNode" type="text" placeholder="Enter destination (e.g., B, N1)" />
+            <label>Algorithm</label>
+            <select id="algorithm">
+                <option value="dijkstra">Dijkstra's Algorithm - O((V+E)logV)</option>
+                <option value="bellman-ford">Bellman-Ford Algorithm - O(V⋅E)</option>
+                <option value="floyd-warshall">Floyd-Warshall Algorithm - O(V³)</option>
+            </select>
+            <button onclick="runPathFinding()" class="btn-accent">🚀 Find Shortest Path</button>
+            <button onclick="clearHighlights()" class="btn-ghost">Clear Path Highlights</button>
+            
+            <div class="routing-box" id="routingBox">
+                <h3 style="margin:0">📈 Results & Performance</h3>
+                <div id="routingContent" style="margin-top:8px">Click "Generate" to create a network topology, then use path finding!</div>
+            </div>
+            
+            <div id="pathInfo"></div>
+            
+            <p class="hint">💡 Tip: Generate a topology first, then enter node names (like "A", "B", "Center", "N1") to find shortest paths between them.</p>
+        </div>
+    </div>
+
+    <script>
+        let nodes = [];
+        let edges = [];
+        
+        // Clear everything
+        function clearCanvas() {
+            nodes = [];
+            edges = [];
+            const canvas = document.getElementById('canvasWrap');
+            canvas.innerHTML = '';
+            document.getElementById('routingContent').innerHTML = 'Network cleared. Generate a new topology to start.';
+            document.getElementById('pathInfo').innerHTML = '';
+        }
+        
+        // Create a node element
+        function createNode(name, x, y) {
+            const canvas = document.getElementById('canvasWrap');
+            const node = document.createElement('div');
+            node.className = 'node';
+            node.textContent = name;
+            node.style.left = x + 'px';
+            node.style.top = y + 'px';
+            node.setAttribute('data-node', name);
+            canvas.appendChild(node);
+            
+            nodes.push({name, x, y, element: node});
+            return node;
+        }
+        
+        // Create an edge between two nodes
+        function createEdge(fromName, toName, weight) {
+            const fromNode = nodes.find(n => n.name === fromName);
+            const toNode = nodes.find(n => n.name === toName);
+            
+            if (!fromNode || !toNode) {
+                console.error(`Cannot create edge: ${fromName} or ${toName} not found`);
+                return;
+            }
+            
+            const canvas = document.getElementById('canvasWrap');
+            
+            // Calculate edge position and rotation
+            const dx = toNode.x - fromNode.x;
+            const dy = toNode.y - fromNode.y;
+            const length = Math.sqrt(dx * dx + dy * dy);
+            const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+            
+            // Create edge line
+            const edge = document.createElement('div');
+            edge.className = 'edge';
+            edge.style.left = (fromNode.x + 25) + 'px';
+            edge.style.top = (fromNode.y + 25) + 'px';
+            edge.style.width = length + 'px';
+            edge.style.transform = `rotate(${angle}deg)`;
+            edge.setAttribute('data-edge', `${fromName}-${toName}`);
+            canvas.appendChild(edge);
+            
+            // Create weight label
+            const weightLabel = document.createElement('div');
+            weightLabel.className = 'edge-weight';
+            weightLabel.textContent = weight;
+            weightLabel.style.left = (fromNode.x + 25 + dx/2) + 'px';
+            weightLabel.style.top = (fromNode.y + 25 + dy/2) + 'px';
+            canvas.appendChild(weightLabel);
+            
+            edges.push({fromName, toName, weight, element: edge, weightElement: weightLabel});
+        }
+        
+        // Generate Star Topology
+        function generateStarTopology() {
+            clearCanvas();
+            
+            console.log('Generating star topology...');
+            
+            // Create center node
+            createNode('Center', 300, 200);
+            
+            // Create surrounding nodes
+            const radius = 120;
+            const nodeNames = ['N1', 'N2', 'N3', 'N4', 'N5'];
+            
+            nodeNames.forEach((name, i) => {
+                const angle = (i * 2 * Math.PI) / nodeNames.length;
+                const x = 300 + radius * Math.cos(angle);
+                const y = 200 + radius * Math.sin(angle);
+                createNode(name, x, y);
+                
+                // Connect to center with random weight
+                const weight = Math.floor(Math.random() * 10) + 1;
+                createEdge('Center', name, weight);
+            });
+            
+            document.getElementById('routingContent').innerHTML = '⭐ Star topology generated with 6 nodes and 5 edges. Try finding a path from "Center" to "N1"!';
+            console.log('Star topology created successfully!');
+        }
+        
+        // Generate Mesh Topology
+        function generateMeshTopology() {
+            clearCanvas();
+            
+            console.log('Generating mesh topology...');
+            
+            const nodeNames = ['A', 'B', 'C', 'D'];
+            const positions = [
+                {x: 200, y: 150},
+                {x: 400, y: 150}, 
+                {x: 400, y: 250},
+                {x: 200, y: 250}
+            ];
+            
+            // Create nodes
+            nodeNames.forEach((name, i) => {
+                createNode(name, positions[i].x, positions[i].y);
+            });
+            
+            // Connect all nodes to all other nodes (fully connected)
+            for(let i = 0; i < nodeNames.length; i++) {
+                for(let j = i + 1; j < nodeNames.length; j++) {
+                    const weight = Math.floor(Math.random() * 15) + 1;
+                    createEdge(nodeNames[i], nodeNames[j], weight);
+                }
+            }
+            
+            document.getElementById('routingContent').innerHTML = '🔗 Mesh topology generated with 4 fully connected nodes. Try finding a path from "A" to "C"!';
+            console.log('Mesh topology created successfully!');
+        }
+        
+        // Generate Hybrid Topology
+        function generateHybridTopology() {
+            clearCanvas();
+            
+            console.log('Generating hybrid topology...');
+            
+            // Create hub
+            createNode('Hub', 300, 200);
+            
+            // Create cluster 1
+            createNode('A1', 180, 120);
+            createNode('A2', 150, 200);
+            createNode('A3', 180, 280);
+            
+            // Create cluster 2
+            createNode('B1', 420, 120);
+            createNode('B2', 450, 200);
+            createNode('B3', 420, 280);
+            
+            // Connect hub to all nodes
+            ['A1', 'A2', 'A3', 'B1', 'B2', 'B3'].forEach(node => {
+                const weight = Math.floor(Math.random() * 8) + 1;
+                createEdge('Hub', node, weight);
+            });
+            
+            // Connect within clusters
+            createEdge('A1', 'A2', 3);
+            createEdge('A2', 'A3', 4);
+            createEdge('B1', 'B2', 2);
+            createEdge('B2', 'B3', 5);
+            
+            document.getElementById('routingContent').innerHTML = '🌐 Hybrid topology generated with 7 nodes. Try finding a path from "A1" to "B3"!';
+            console.log('Hybrid topology created successfully!');
+        }
+        
+        // Build graph representation for algorithms
+        function buildGraph() {
+            const graph = {};
+            
+            // Initialize empty adjacency list
+            nodes.forEach(node => {
+                graph[node.name] = {};
+            });
+            
+            // Add edges (undirected graph)
+            edges.forEach(edge => {
+                graph[edge.fromName][edge.toName] = edge.weight;
+                graph[edge.toName][edge.fromName] = edge.weight;
+            });
+            
+            return graph;
+        }
+        
+        // Dijkstra's algorithm
+        function dijkstra(graph, start) {
+            const distances = {};
+            const previous = {};
+            const unvisited = new Set();
+            
+            // Initialize distances
+            Object.keys(graph).forEach(node => {
+                distances[node] = node === start ? 0 : Infinity;
+                previous[node] = null;
+                unvisited.add(node);
+            });
+            
+            while(unvisited.size > 0) {
+                // Find unvisited node with minimum distance
+                let current = null;
+                let minDist = Infinity;
+                for(let node of unvisited) {
+                    if(distances[node] < minDist) {
+                        minDist = distances[node];
+                        current = node;
+                    }
+                }
+                
+                if(current === null) break;
+                unvisited.delete(current);
+                
+                // Update distances to neighbors
+                for(let neighbor in graph[current]) {
+                    if(unvisited.has(neighbor)) {
+                        const newDist = distances[current] + graph[current][neighbor];
+                        if(newDist < distances[neighbor]) {
+                            distances[neighbor] = newDist;
+                            previous[neighbor] = current;
+                        }
+                    }
+                }
+            }
+            
+            return {distances, previous};
+        }
+        
+        // Bellman-Ford algorithm
+        function bellmanFord(graph, start) {
+            const distances = {};
+            const previous = {};
+            
+            // Initialize distances
+            Object.keys(graph).forEach(node => {
+                distances[node] = node === start ? 0 : Infinity;
+                previous[node] = null;
+            });
+            
+            const nodeCount = Object.keys(graph).length;
+            
+            // Relax edges repeatedly
+            for(let i = 0; i < nodeCount - 1; i++) {
+                edges.forEach(edge => {
+                    const {fromName, toName, weight} = edge;
+                    if(distances[fromName] !== Infinity && distances[fromName] + weight < distances[toName]) {
+                        distances[toName] = distances[fromName] + weight;
+                        previous[toName] = fromName;
+                    }
+                    if(distances[toName] !== Infinity && distances[toName] + weight < distances[fromName]) {
+                        distances[fromName] = distances[toName] + weight;
+                        previous[fromName] = toName;
+                    }
+                });
+            }
+            
+            return {distances, previous};
+        }
+        
+        // Floyd-Warshall algorithm
+        function floydWarshall(graph) {
+            const nodeNames = Object.keys(graph);
+            const distances = {};
+            const next = {};
+            
+            // Initialize distance matrix
+            nodeNames.forEach(i => {
+                distances[i] = {};
+                next[i] = {};
+                nodeNames.forEach(j => {
+                    if(i === j) {
+                        distances[i][j] = 0;
+                    } else if(graph[i][j]) {
+                        distances[i][j] = graph[i][j];
+                        next[i][j] = j;
+                    } else {
+                        distances[i][j] = Infinity;
+                        next[i][j] = null;
+                    }
+                });
+            });
+            
+            // Floyd-Warshall main algorithm
+            nodeNames.forEach(k => {
+                nodeNames.forEach(i => {
+                    nodeNames.forEach(j => {
+                        if(distances[i][k] + distances[k][j] < distances[i][j]) {
+                            distances[i][j] = distances[i][k] + distances[k][j];
+                            next[i][j] = next[i][k];
+                        }
+                    });
+                });
+            });
+            
+            return {distances, next};
+        }
+        
+        // Clear highlights
+        function clearHighlights() {
+            document.querySelectorAll('.node').forEach(el => {
+                el.classList.remove('highlighted');
+            });
+            document.querySelectorAll('.edge').forEach(el => {
+                el.classList.remove('highlighted');
+            });
+            document.getElementById('pathInfo').innerHTML = '';
+        }
+        
+        // Run path finding algorithm
+        function runPathFinding() {
+            const sourceNode = document.getElementById('sourceNode').value.trim();
+            const destNode = document.getElementById('destNode').value.trim();
+            const algorithm = document.getElementById('algorithm').value;
+            
+            if(!sourceNode || !destNode) {
+                alert('Please enter both source and destination nodes');
+                return;
+            }
+            
+            const graph = buildGraph();
+            
+            if(!graph[sourceNode] || !graph[destNode]) {
+                alert('One or both nodes do not exist in the current network');
+                return;
+            }
+            
+            // Clear previous highlights
+            clearHighlights();
+            
+            const startTime = performance.now();
+            let result;
+            
+            // Run selected algorithm
+            switch(algorithm) {
+                case 'dijkstra':
+                    result = dijkstra(graph, sourceNode);
+                    break;
+                case 'bellman-ford':
+                    result = bellmanFord(graph, sourceNode);
+                    break;
+                case 'floyd-warshall':
+                    const fwResult = floydWarshall(graph);
+                    result = {
+                        distances: fwResult.distances[sourceNode],
+                        previous: {}
+                    };
+                    // Reconstruct path for Floyd-Warshall
+                    let current = sourceNode;
+                    while(current !== destNode && fwResult.next[current] && fwResult.next[current][destNode]) {
+                        result.previous[fwResult.next[current][destNode]] = current;
+                        current = fwResult.next[current][destNode];
+                    }
+                    break;
+            }
+            
+            const endTime = performance.now();
+            const executionTime = (endTime - startTime).toFixed(3);
+            
+            const distance = result.distances[destNode];
+            
+            if(distance === Infinity) {
+                document.getElementById('routingContent').innerHTML = `❌ No path found from ${sourceNode} to ${destNode}`;
+                return;
+            }
+            
+            // Reconstruct and highlight path
+            const path = [];
+            let current = destNode;
+            while(current !== null) {
+                path.unshift(current);
+                current = result.previous[current];
+            }
+            
+            // Highlight nodes in path
+            path.forEach(nodeName => {
+                const nodeEl = document.querySelector(`[data-node="${nodeName}"]`);
+                if(nodeEl) nodeEl.classList.add('highlighted');
+            });
+            
+            // Highlight edges in path
+            for(let i = 0; i < path.length - 1; i++) {
+                const from = path[i];
+                const to = path[i + 1];
+                const edgeEl = document.querySelector(`[data-edge="${from}-${to}"], [data-edge="${to}-${from}"]`);
+                if(edgeEl) edgeEl.classList.add('highlighted');
+            }
+            
+            // Display results
+            document.getElementById('routingContent').innerHTML = `
+                ✅ <strong>Algorithm:</strong> ${algorithm.charAt(0).toUpperCase() + algorithm.slice(1)}<br>
+                ⚡ <strong>Execution Time:</strong> ${executionTime}ms<br>
+                📊 <strong>Network:</strong> ${nodes.length} nodes, ${edges.length} edges
+            `;
+            
+            document.getElementById('pathInfo').innerHTML = `
+                <strong>🛣️ Shortest Path:</strong> ${path.join(' → ')}<br>
+                <strong>📏 Total Distance:</strong> ${distance}
+            `;
+            
+            console.log(`Path found: ${path.join(' → ')} (distance: ${distance})`);
+        }
+        
+        console.log('✅ Network Routing Simulation loaded successfully!');
+        console.log('🚀 Ready to generate topologies and find shortest paths!');
+    </script>
+</body>
+</html>
