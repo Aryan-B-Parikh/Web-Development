@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routing Algorithm Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; }
+        .info { background-color: #d1ecf1; border: 1px solid #bee5eb; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Routing Algorithm Test Suite</h1>
+    <div id="results"></div>
+    <button onclick="runTests()">Run All Tests</button>
+
+    <script>
+        // Copy the routing algorithms from main file
+        function buildGraph(nodes, edges) {
+            const graph = {};
+            
+            nodes.forEach(node => {
+                graph[node.name] = {};
+            });
+            
+            edges.forEach(edge => {
+                graph[edge.fromName][edge.toName] = edge.weight;
+                graph[edge.toName][edge.fromName] = edge.weight; // Undirected graph
+            });
+            
+            return graph;
+        }
+
+        function dijkstra(graph, src) {
+            if(!graph[src]) { 
+                return {distances: {}, previous: {}, error: "Invalid source node"}; 
+            }
+            
+            const distances = {}, previous = {};
+            const unvisited = new Set();
+            
+            Object.keys(graph).forEach(node => {
+                distances[node] = node === src ? 0 : Infinity;
+                previous[node] = null;
+                unvisited.add(node);
+            });
+            
+            while(unvisited.size > 0) {
+                let current = null;
+                let minDist = Infinity;
+                for(let node of unvisited) {
+                    if(distances[node] < minDist) {
+                        minDist = distances[node];
+                        current = node;
+                    }
+                }
+                
+                if(current === null) break;
+                unvisited.delete(current);
+                
+                for(let neighbor in graph[current]) {
+                    if(unvisited.has(neighbor)) {
+                        const newDist = distances[current] + graph[current][neighbor];
+                        if(newDist < distances[neighbor]) {
+                            distances[neighbor] = newDist;
+                            previous[neighbor] = current;
+                        }
+                    }
+                }
+            }
+            
+            return {distances, previous};
+        }
+
+        function bellmanFord(graph, src, edges) {
+            if(!graph[src]) { 
+                return {distances: {}, previous: {}, error: "Invalid source node"}; 
+            }
+            
+            const distances = {}, previous = {};
+            
+            Object.keys(graph).forEach(node => {
+                distances[node] = node === src ? 0 : Infinity;
+                previous[node] = null;
+            });
+            
+            const nodeCount = Object.keys(graph).length;
+            for(let i = 0; i < nodeCount - 1; i++) {
+                edges.forEach(edge => {
+                    const {fromName, toName, weight} = edge;
+                    if(distances[fromName] !== Infinity && distances[fromName] + weight < distances[toName]) {
+                        distances[toName] = distances[fromName] + weight;
+                        previous[toName] = fromName;
+                    }
+                    if(distances[toName] !== Infinity && distances[toName] + weight < distances[fromName]) {
+                        distances[fromName] = distances[toName] + weight;
+                        previous[fromName] = toName;
+                    }
+                });
+            }
+            
+            return {distances, previous};
+        }
+
+        function floydWarshall(graph) {
+            const nodeNames = Object.keys(graph);
+            const distances = {}, next = {};
+            
+            nodeNames.forEach(i => {
+                distances[i] = {};
+                next[i] = {};
+                nodeNames.forEach(j => {
+                    if(i === j) {
+                        distances[i][j] = 0;
+                    } else if(graph[i][j]) {
+                        distances[i][j] = graph[i][j];
+                        next[i][j] = j;
+                    } else {
+                        distances[i][j] = Infinity;
+                        next[i][j] = null;
+                    }
+                });
+            });
+            
+            nodeNames.forEach(k => {
+                nodeNames.forEach(i => {
+                    nodeNames.forEach(j => {
+                        if(distances[i][k] + distances[k][j] < distances[i][j]) {
+                            distances[i][j] = distances[i][k] + distances[k][j];
+                            next[i][j] = next[i][k];
+                        }
+                    });
+                });
+            });
+            
+            return {distances, next};
+        }
+
+        // Test topology generators
+        function generateStarTopology() {
+            const nodes = [
+                {name: 'Center', x: 300, y: 200}
+            ];
+            const edges = [];
+            
+            for(let i = 0; i < 5; i++) {
+                const nodeName = `N${i+1}`;
+                nodes.push({name: nodeName, x: 300 + 100, y: 200 + 50*i});
+                
+                edges.push({
+                    fromName: 'Center',
+                    toName: nodeName,
+                    weight: Math.floor(Math.random() * 10) + 1
+                });
+            }
+            
+            return {nodes, edges};
+        }
+
+        function generateMeshTopology() {
+            const nodes = [
+                {name: 'A', x: 200, y: 150},
+                {name: 'B', x: 400, y: 150},
+                {name: 'C', x: 400, y: 250},
+                {name: 'D', x: 200, y: 250}
+            ];
+            const edges = [];
+            
+            for(let i = 0; i < nodes.length; i++) {
+                for(let j = i + 1; j < nodes.length; j++) {
+                    edges.push({
+                        fromName: nodes[i].name,
+                        toName: nodes[j].name,
+                        weight: Math.floor(Math.random() * 15) + 1
+                    });
+                }
+            }
+            
+            return {nodes, edges};
+        }
+
+        function addResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.innerHTML = message;
+            document.getElementById('results').appendChild(div);
+        }
+
+        function testAlgorithmOnTopology(topologyName, topology) {
+            addResult(`<h3>Testing ${topologyName}</h3>`, 'info');
+            
+            const graph = buildGraph(topology.nodes, topology.edges);
+            const nodeNames = topology.nodes.map(n => n.name);
+            
+            // Test Dijkstra
+            const sourceNode = nodeNames[0];
+            const targetNode = nodeNames[nodeNames.length - 1];
+            
+            try {
+                const dijkstraResult = dijkstra(graph, sourceNode);
+                if(dijkstraResult.error) {
+                    addResult(`❌ Dijkstra failed: ${dijkstraResult.error}`, 'error');
+                } else {
+                    const distance = dijkstraResult.distances[targetNode];
+                    addResult(`✅ Dijkstra: ${sourceNode} → ${targetNode} = ${distance === Infinity ? '∞' : distance}`, 'success');
+                }
+            } catch(e) {
+                addResult(`❌ Dijkstra error: ${e.message}`, 'error');
+            }
+            
+            // Test Bellman-Ford
+            try {
+                const bellmanResult = bellmanFord(graph, sourceNode, topology.edges);
+                if(bellmanResult.error) {
+                    addResult(`❌ Bellman-Ford failed: ${bellmanResult.error}`, 'error');
+                } else {
+                    const distance = bellmanResult.distances[targetNode];
+                    addResult(`✅ Bellman-Ford: ${sourceNode} → ${targetNode} = ${distance === Infinity ? '∞' : distance}`, 'success');
+                }
+            } catch(e) {
+                addResult(`❌ Bellman-Ford error: ${e.message}`, 'error');
+            }
+            
+            // Test Floyd-Warshall
+            try {
+                const floydResult = floydWarshall(graph);
+                const distance = floydResult.distances[sourceNode][targetNode];
+                addResult(`✅ Floyd-Warshall: ${sourceNode} → ${targetNode} = ${distance === Infinity ? '∞' : distance}`, 'success');
+            } catch(e) {
+                addResult(`❌ Floyd-Warshall error: ${e.message}`, 'error');
+            }
+        }
+
+        function runTests() {
+            document.getElementById('results').innerHTML = '';
+            
+            addResult('<h2>🚀 Starting Routing Algorithm Tests</h2>', 'info');
+            
+            // Test Star Topology
+            const starTopology = generateStarTopology();
+            testAlgorithmOnTopology('Star Topology', starTopology);
+            
+            // Test Mesh Topology  
+            const meshTopology = generateMeshTopology();
+            testAlgorithmOnTopology('Mesh Topology', meshTopology);
+            
+            addResult('<h2>✨ All tests completed!</h2>', 'success');
+        }
+
+        // Run tests automatically on page load
+        window.onload = () => {
+            addResult('Click "Run All Tests" to verify routing algorithms work with generated topologies', 'info');
+        };
+    </script>
+</body>
+</html>
