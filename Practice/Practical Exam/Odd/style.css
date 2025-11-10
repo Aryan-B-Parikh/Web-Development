@@ -1,0 +1,63 @@
+/* Reset and Base */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+
+/* Container */
+.container { max-width: 700px; margin: 0 auto; background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+
+/* Header */
+header { text-align: center; margin-bottom: 30px; }
+h1 { color: #333; margin-bottom: 10px; }
+
+/* Form Sections */
+.form-section { margin-bottom: 25px; padding: 20px; background: #f8f9fa; border-radius: 6px; }
+.form-section h2 { color: #495057; margin-bottom: 15px; font-size: 18px; }
+.form-group { margin-bottom: 15px; }
+
+/* Form Elements */
+label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+input, select, textarea { width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-size: 16px; }
+textarea { resize: vertical; min-height: 80px; }
+input:focus, select:focus, textarea:focus { border-color: #007bff; outline: none; }
+
+/* Track Selection */
+.track-option { margin-bottom: 15px; padding: 15px; border: 2px solid #ddd; border-radius: 6px; cursor: pointer; transition: all 0.3s; }
+.track-option:hover { border-color: #007bff; }
+.track-option.selected { border-color: #007bff; background: #f0f8ff; }
+.track-option input { width: auto; margin-right: 10px; }
+.track-name { font-weight: bold; margin-bottom: 5px; }
+.track-description { color: #666; font-size: 14px; }
+
+/* Team Size Selection */
+.team-size-options { display: flex; gap: 10px; margin-bottom: 15px; }
+.team-size-option { flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 4px; text-align: center; cursor: pointer; }
+.team-size-option.selected { border-color: #007bff; background: #f0f8ff; }
+
+/* Team Members */
+.team-member { padding: 15px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px; background: #f8f9fa; }
+.team-member h4 { margin-bottom: 10px; color: #495057; }
+
+/* Validation States */
+.valid { border-color: #28a745 !important; background: #f8fff9; }
+.invalid { border-color: #dc3545 !important; background: #fff8f8; }
+.error-message { color: #dc3545; font-size: 14px; margin-top: 5px; display: none; }
+.status-message { font-size: 14px; margin-top: 5px; }
+.checking { color: #ffc107; }
+.available { color: #28a745; }
+.unavailable { color: #dc3545; }
+
+/* Checkbox */
+.checkbox-group { display: flex; align-items: center; gap: 10px; margin: 20px 0; }
+.checkbox-group input { width: auto; }
+
+/* Buttons */
+.btn { padding: 12px 25px; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; margin: 10px 5px; }
+.btn-primary { background: #007bff; color: white; }
+.btn-secondary { background: #6c757d; color: white; }
+.btn-success { background: #28a745; color: white; }
+.btn:hover { opacity: 0.9; }
+.btn:disabled { background: #ccc; cursor: not-allowed; }
+
+/* Success Popup */
+.success-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); text-align: center; display: none; z-index: 1000; }
+.success-popup.show { display: block; }

@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Contact Us</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #b8b8b8;
+        }
+        .form-wrap{
+            max-width:500px;
+            margin:0 auto;
+            background:#f9f9f9;
+            padding:20px;
+            border-radius:8px;    
+        }
+        label{
+            display:block;
+            margin-bottom:8px;
+            font-weight:bold;
+        }
+        input, select, textarea{
+            width:100%;
+            padding:10px;
+            margin-bottom:15px;
+            border:1px solid #ccc;
+            border-radius:4px;
+            box-sizing:border-box;
+        }
+        .form-wrap h2{
+            text-align:center;
+            margin-bottom:30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-wrap">
+        <h2>Contact Us</h2>
+        <form id="contactForm" action="/submit-contact" method="post">
+            <label >First Name</label>
+            <input type="text" name="name" required />
+            <label>Last Name</label>
+            <input type="text" name="lastname" required />
+            <label>Email</label>
+            <input type="email" name="email" required />
+            <label>Reason</label>
+            <select name="reason" required>
+                <option value="">Select a reason</option>
+                <option value="support">Support</option>
+                <option value="sales">Sales</option>
+                <option value="feedback">Feedback</option>
+            </select>
+            <label>Message</label>
+            <textarea name="message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Fair Registration</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: #333; margin-bottom: 10px; }
+        .form-section { margin-bottom: 25px; padding: 20px; background: #f8f9fa; border-radius: 6px; }
+        .form-section h2 { color: #495057; margin-bottom: 15px; font-size: 18px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input, select { width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-size: 16px; }
+        input:focus, select:focus { border-color: #007bff; outline: none; }
+        .valid { border-color: #28a745 !important; background: #f8fff9; }
+        .invalid { border-color: #dc3545 !important; background: #fff8f8; }
+        .error-message { color: #dc3545; font-size: 14px; margin-top: 5px; display: none; }
+        .status-message { font-size: 14px; margin-top: 5px; }
+        .checking { color: #ffc107; }
+        .available { color: #28a745; }
+        .unavailable { color: #dc3545; }
+        .strength-indicator { margin-top: 5px; height: 4px; border-radius: 2px; }
+        .weak { background: #dc3545; width: 25%; }
+        .medium { background: #ffc107; width: 50%; }
+        .strong { background: #28a745; width: 75%; }
+        .very-strong { background: #28a745; width: 100%; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; margin: 20px 0; }
+        .checkbox-group input { width: auto; }
+        .btn { padding: 12px 25px; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; margin: 10px 5px; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn:hover { opacity: 0.9; }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .success-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); text-align: center; display: none; z-index: 1000; }
+        .success-popup.show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Job Fair Registration</h1>
+            <p>Please fill in all required information to register for the job fair</p>
+        </header>
+
+        <form id="registrationForm">
+            <section class="form-section">
+                <h2>Identity Information</h2>
+                <div class="form-group">
+                    <label for="username">Username *</label>
+                    <input type="text" id="username" name="username" required>
+                    <div class="error-message" id="usernameError">Username must be 3-20 characters, alphanumeric and underscores only</div>
+                    <div class="status-message" id="usernameStatus"></div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password *</label>
+                    <input type="password" id="password" name="password" required>
+                    <div class="strength-indicator" id="strengthIndicator"></div>
+                    <div class="error-message" id="passwordError">Password must be 8+ characters with uppercase, lowercase, number and special character</div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password *</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <h2>Contact Information</h2>
+                <div class="form-group">
+                    <label for="firstName">First Name *</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                    <div class="error-message" id="firstNameError">First name must be 2-50 characters, letters only</div>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name *</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                    <div class="error-message" id="lastNameError">Last name must be 2-50 characters, letters only</div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                    <div class="status-message" id="emailStatus"></div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                    <div class="error-message" id="phoneError">Phone must be 10 digits starting with 6-9</div>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <h2>Academic Information</h2>
+                <div class="form-group">
+                    <label for="college">College Name *</label>
+                    <input type="text" id="college" name="college" required>
+                    <div class="error-message" id="collegeError">College name is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="degree">Degree *</label>
+                    <select id="degree" name="degree" required>
+                        <option value="">Select Degree</option>
+                        <option value="BTech">B.Tech</option>
+                        <option value="BCA">BCA</option>
+                        <option value="MCA">MCA</option>
+                        <option value="MTech">M.Tech</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div class="error-message" id="degreeError">Please select a degree</div>
+                </div>
+                <div class="form-group">
+                    <label for="graduation">Expected Graduation *</label>
+                    <input type="month" id="graduation" name="graduation" required>
+                    <div class="error-message" id="graduationError">Graduation date must be in the future</div>
+                </div>
+            </section>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">I agree to the terms and conditions *</label>
+            </div>
+
+            <div style="text-align: center;">
+                <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
+                <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Register</button>
+            </div>
+        </form>
+
+        <div class="success-popup" id="successPopup">
+            <h3>Registration Successful!</h3>
+            <p>Your registration has been submitted successfully.</p>
+            <p><strong>Registration ID: <span id="registrationId"></span></strong></p>
+            <button class="btn btn-primary" onclick="closePopup()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const patterns = {
+            username: /^[a-zA-Z0-9_]{3,20}$/,
+            password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+            name: /^[a-zA-Z\s]{2,50}$/,
+            email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            phone: /^[6-9]\d{9}$/
+        };
+
+        class StudentRegistration {
+            constructor() {
+                this.identity = { username: '', password: '' };
+                this.contact = { firstName: '', lastName: '', email: '', phone: '' };
+                this.academic = { college: '', degree: '', graduation: '' };
+                this.timestamp = new Date().toISOString();
+                this.registrationId = this.generateId();
+            }
+
+            generateId() {
+                return 'JOB' + Date.now() + Math.random().toString(36).substr(2, 5).toUpperCase();
+            }
+
+            updateIdentity(username, password) {
+                this.identity = { username, password };
+            }
+
+            updateContact(firstName, lastName, email, phone) {
+                this.contact = { firstName, lastName, email, phone };
+            }
+
+            updateAcademic(college, degree, graduation) {
+                this.academic = { college, degree, graduation };
+            }
+
+            getRegistrationData() {
+                return {
+                    registrationId: this.registrationId,
+                    identity: this.identity,
+                    contact: this.contact,
+                    academic: this.academic,
+                    timestamp: this.timestamp
+                };
+            }
+        }
+
+        const registration = new StudentRegistration();
+
+        function validateField(fieldId, pattern, errorId) {
+            const field = document.getElementById(fieldId);
+            const error = document.getElementById(errorId);
+            const value = field.value.trim();
+
+            if (value === '') {
+                field.classList.remove('valid', 'invalid');
+                error.style.display = 'none';
+                return false;
+            }
+
+            const isValid = pattern.test(value);
+            field.classList.toggle('valid', isValid);
+            field.classList.toggle('invalid', !isValid);
+            error.style.display = isValid ? 'none' : 'block';
+            
+            return isValid;
+        }
+
+        function checkPasswordStrength(password) {
+            const strengthIndicator = document.getElementById('strengthIndicator');
+            let strength = 0;
+            
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[@$!%*?&]/.test(password)) strength++;
+
+            const strengthClasses = ['', 'weak', 'medium', 'strong', 'very-strong'];
+            strengthIndicator.className = 'strength-indicator ' + (strengthClasses[strength] || '');
+            
+            return strength >= 4;
+        }
+
+        async function checkUsernameAvailability(username) {
+            const statusElement = document.getElementById('usernameStatus');
+            statusElement.textContent = 'Checking availability...';
+            statusElement.className = 'status-message checking';
+
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Mock check - some usernames are "taken"
+            const takenUsernames = ['admin', 'user', 'test', 'demo'];
+            const isAvailable = !takenUsernames.includes(username.toLowerCase());
+            
+            statusElement.textContent = isAvailable ? 'Username available' : 'Username not available';
+            statusElement.className = `status-message ${isAvailable ? 'available' : 'unavailable'}`;
+            
+            return isAvailable;
+        }
+
+        async function checkEmailUniqueness(email) {
+            const statusElement = document.getElementById('emailStatus');
+            statusElement.textContent = 'Checking email...';
+            statusElement.className = 'status-message checking';
+
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 800));
+            
+            // Mock check - some emails are "registered"
+            const registeredEmails = ['test@example.com', 'admin@example.com', 'user@example.com'];
+            const isUnique = !registeredEmails.includes(email.toLowerCase());
+            
+            statusElement.textContent = isUnique ? 'Email available' : 'Email already registered';
+            statusElement.className = `status-message ${isUnique ? 'available' : 'unavailable'}`;
+            
+            return isUnique;
+        }
+
+        function validateForm() {
+            const fields = [
+                { id: 'username', pattern: patterns.username, error: 'usernameError' },
+                { id: 'password', pattern: patterns.password, error: 'passwordError' },
+                { id: 'firstName', pattern: patterns.name, error: 'firstNameError' },
+                { id: 'lastName', pattern: patterns.name, error: 'lastNameError' },
+                { id: 'email', pattern: patterns.email, error: 'emailError' },
+                { id: 'phone', pattern: patterns.phone, error: 'phoneError' }
+            ];
+
+            let isValid = true;
+            fields.forEach(field => {
+                const fieldElement = document.getElementById(field.id);
+                if (fieldElement && fieldElement.value.trim()) {
+                    if (!validateField(field.id, field.pattern, field.error)) {
+                        isValid = false;
+                    }
+                } else if (fieldElement) {
+                    fieldElement.classList.remove('valid', 'invalid');
+                    document.getElementById(field.error).style.display = 'none';
+                    if (fieldElement.hasAttribute('required')) {
+                        isValid = false;
+                    }
+                }
+            });
+
+            // Check password confirmation
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const confirmError = document.getElementById('confirmPasswordError');
+            
+            if (password && confirmPassword) {
+                if (password !== confirmPassword) {
+                    document.getElementById('confirmPassword').classList.add('invalid');
+                    document.getElementById('confirmPassword').classList.remove('valid');
+                    confirmError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('confirmPassword').classList.remove('invalid');
+                    document.getElementById('confirmPassword').classList.add('valid');
+                    confirmError.style.display = 'none';
+                }
+            } else if (confirmPassword) {
+                confirmError.style.display = 'none';
+            }
+
+            // Check required fields
+            const college = document.getElementById('college').value.trim();
+            const degree = document.getElementById('degree').value;
+            const graduation = document.getElementById('graduation').value;
+            const terms = document.getElementById('terms').checked;
+
+            if (!college) {
+                document.getElementById('college').classList.add('invalid');
+                document.getElementById('collegeError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('college').classList.remove('invalid');
+                document.getElementById('college').classList.add('valid');
+                document.getElementById('collegeError').style.display = 'none';
+            }
+
+            if (!degree) {
+                document.getElementById('degree').classList.add('invalid');
+                document.getElementById('degreeError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('degree').classList.remove('invalid');
+                document.getElementById('degree').classList.add('valid');
+                document.getElementById('degreeError').style.display = 'none';
+            }
+
+            if (!graduation) {
+                document.getElementById('graduation').classList.add('invalid');
+                document.getElementById('graduationError').style.display = 'block';
+                isValid = false;
+            } else {
+                const gradDate = new Date(graduation + '-01');
+                const currentDate = new Date();
+                if (gradDate <= currentDate) {
+                    document.getElementById('graduation').classList.add('invalid');
+                    document.getElementById('graduationError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('graduation').classList.remove('invalid');
+                    document.getElementById('graduation').classList.add('valid');
+                    document.getElementById('graduationError').style.display = 'none';
+                }
+            }
+
+            document.getElementById('submitBtn').disabled = !isValid || !terms;
+            return isValid && terms;
+        }
+
+        document.getElementById('username').addEventListener('input', function() {
+            const isValid = validateField('username', patterns.username, 'usernameError');
+            if (isValid) {
+                checkUsernameAvailability(this.value);
+            }
+            validateForm();
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            validateField('password', patterns.password, 'passwordError');
+            checkPasswordStrength(this.value);
+            validateForm();
+        });
+
+        document.getElementById('confirmPassword').addEventListener('input', validateForm);
+        document.getElementById('firstName').addEventListener('input', function() {
+            validateField('firstName', patterns.name, 'firstNameError');
+            validateForm();
+        });
+
+        document.getElementById('lastName').addEventListener('input', function() {
+            validateField('lastName', patterns.name, 'lastNameError');
+            validateForm();
+        });
+
+        document.getElementById('email').addEventListener('input', function() {
+            const isValid = validateField('email', patterns.email, 'emailError');
+            if (isValid) {
+                checkEmailUniqueness(this.value);
+            }
+            validateForm();
+        });
+
+        document.getElementById('phone').addEventListener('input', function() {
+            validateField('phone', patterns.phone, 'phoneError');
+            validateForm();
+        });
+
+        document.getElementById('college').addEventListener('input', validateForm);
+        document.getElementById('degree').addEventListener('change', validateForm);
+        document.getElementById('graduation').addEventListener('change', validateForm);
+        document.getElementById('terms').addEventListener('change', validateForm);
+
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateForm()) {
+                const formData = new FormData(this);
+                registration.updateIdentity(formData.get('username'), formData.get('password'));
+                registration.updateContact(
+                    formData.get('firstName'),
+                    formData.get('lastName'),
+                    formData.get('email'),
+                    formData.get('phone')
+                );
+                registration.updateAcademic(
+                    formData.get('college'),
+                    formData.get('degree'),
+                    formData.get('graduation')
+                );
+
+                localStorage.setItem('jobFairRegistration', JSON.stringify(registration.getRegistrationData()));
+                
+                document.getElementById('registrationId').textContent = registration.registrationId;
+                document.getElementById('successPopup').classList.add('show');
+            }
+        });
+
+        function clearForm() {
+            document.getElementById('registrationForm').reset();
+            document.querySelectorAll('.valid, .invalid').forEach(el => {
+                el.classList.remove('valid', 'invalid');
+            });
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('.status-message').forEach(el => {
+                el.textContent = '';
+                el.className = 'status-message';
+            });
+            const strengthIndicator = document.getElementById('strengthIndicator');
+            if (strengthIndicator) {
+                strengthIndicator.className = 'strength-indicator';
+            }
+            validateForm();
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('successPopup');
+            if (popup) {
+                popup.classList.remove('show');
+            }
+        }
+    </script>
+</body>
+</html>
