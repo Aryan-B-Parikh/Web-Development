@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University TechFest 2024</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>University TechFest 2024</h1>
+            <p>Join the most exciting technology festival!</p>
+        </header>
+
+        <form id="techfestForm">
+            <!-- Personal Information -->
+            <section class="form-section">
+                <h2>Personal Information</h2>
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                    <div id="fullNameError" class="error-message"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="emailAddress">Email Address *</label>
+                    <input type="email" id="emailAddress" name="emailAddress" required>
+                    <div id="emailAddressError" class="error-message"></div>
+                    <div id="emailAddressStatus" class="status-message"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number *</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" required placeholder="+91 XXXXXXXXXX">
+                    <div id="phoneNumberError" class="error-message"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="collegeId">College ID *</label>
+                    <input type="text" id="collegeId" name="collegeId" required placeholder="e.g., CSE2021001">
+                    <div id="collegeIdError" class="error-message"></div>
+                    <div id="collegeIdStatus" class="status-message"></div>
+                </div>
+            </section>
+
+            <!-- Academic Information -->
+            <section class="form-section">
+                <h2>Academic Information</h2>
+                
+                <div class="form-group">
+                    <label for="collegeName">College/University Name *</label>
+                    <input type="text" id="collegeName" name="collegeName" required>
+                    <div id="collegeNameError" class="error-message"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="course">Course/Degree *</label>
+                    <select id="course" name="course" required>
+                        <option value="">Select Course</option>
+                        <option value="btech-cse">B.Tech Computer Science</option>
+                        <option value="btech-it">B.Tech Information Technology</option>
+                        <option value="btech-ece">B.Tech Electronics</option>
+                        <option value="mca">MCA</option>
+                        <option value="bca">BCA</option>
+                        <option value="msc-cs">M.Sc Computer Science</option>
+                    </select>
+                    <div id="courseError" class="error-message"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="yearOfStudy">Year of Study *</label>
+                    <select id="yearOfStudy" name="yearOfStudy" required>
+                        <option value="">Select Year</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                    <div id="yearOfStudyError" class="error-message"></div>
+                </div>
+            </section>
+
+            <!-- TechFest Participation -->
+            <section class="form-section">
+                <h2>TechFest Participation</h2>
+                
+                <div class="form-group">
+                    <label for="participationTrack">Participation Track *</label>
+                    <select id="participationTrack" name="participationTrack" required>
+                        <option value="">Select Track</option>
+                        <option value="web-development">Web Development</option>
+                        <option value="mobile-app">Mobile App Development</option>
+                        <option value="ai-ml">Artificial Intelligence & ML</option>
+                        <option value="data-science">Data Science</option>
+                        <option value="cybersecurity">Cybersecurity</option>
+                        <option value="game-development">Game Development</option>
+                    </select>
+                    <div id="participationTrackError" class="error-message"></div>
+                    <div id="trackDescription" class="track-desc"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="teamSize">Team Size *</label>
+                    <select id="teamSize" name="teamSize" required>
+                        <option value="">Select Size</option>
+                        <option value="1">Individual</option>
+                        <option value="2">Team of 2</option>
+                        <option value="3">Team of 3</option>
+                        <option value="4">Team of 4</option>
+                    </select>
+                    <div id="teamSizeError" class="error-message"></div>
+                </div>
+                
+                <div id="teamMembersSection" class="team-section">
+                    <h3>Team Members</h3>
+                    <div id="teamMembersList"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="motivation">Why do you want to participate? *</label>
+                    <textarea id="motivation" name="motivation" required rows="4" maxlength="200" placeholder="Tell us your motivation..."></textarea>
+                    <div id="motivationError" class="error-message"></div>
+                    <div class="char-count"><span id="motivationCount">0</span>/200</div>
+                </div>
+            </section>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                <label for="agreeTerms">I agree to Terms & Conditions *</label>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="submit" id="submitRegistration" class="btn btn-primary" disabled>Register</button>
+                <button type="button" id="resetForm" class="btn btn-secondary">Reset</button>
+            </div>
+        </form>
+
+        <div id="successMessage" class="success-popup">
+            <h2 style="color: #28a745; margin-bottom: 15px;">🎉 Success!</h2>
+            <p>Registration completed!</p>
+            <p>ID: <span id="registrationId"></span></p>
+            <button id="downloadJSON" class="btn btn-secondary" style="margin-top: 15px;">Download JSON</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

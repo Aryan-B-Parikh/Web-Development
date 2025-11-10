@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University TechFest Registration</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 700px; margin: 0 auto; background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: #333; margin-bottom: 10px; }
+        .form-section { margin-bottom: 25px; padding: 20px; background: #f8f9fa; border-radius: 6px; }
+        .form-section h2 { color: #495057; margin-bottom: 15px; font-size: 18px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input, select, textarea { width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-size: 16px; }
+        textarea { resize: vertical; min-height: 80px; }
+        input:focus, select:focus, textarea:focus { border-color: #007bff; outline: none; }
+        .track-option { margin-bottom: 15px; padding: 15px; border: 2px solid #ddd; border-radius: 6px; cursor: pointer; transition: all 0.3s; }
+        .track-option:hover { border-color: #007bff; }
+        .track-option.selected { border-color: #007bff; background: #f0f8ff; }
+        .track-option input { width: auto; margin-right: 10px; }
+        .track-name { font-weight: bold; margin-bottom: 5px; }
+        .track-description { color: #666; font-size: 14px; }
+        .team-size-options { display: flex; gap: 10px; margin-bottom: 15px; }
+        .team-size-option { flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 4px; text-align: center; cursor: pointer; }
+        .team-size-option.selected { border-color: #007bff; background: #f0f8ff; }
+        .team-member { padding: 15px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px; background: #f8f9fa; }
+        .team-member h4 { margin-bottom: 10px; color: #495057; }
+        .valid { border-color: #28a745 !important; background: #f8fff9; }
+        .invalid { border-color: #dc3545 !important; background: #fff8f8; }
+        .error-message { color: #dc3545; font-size: 14px; margin-top: 5px; display: none; }
+        .status-message { font-size: 14px; margin-top: 5px; }
+        .checking { color: #ffc107; }
+        .available { color: #28a745; }
+        .unavailable { color: #dc3545; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; margin: 20px 0; }
+        .checkbox-group input { width: auto; }
+        .btn { padding: 12px 25px; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; margin: 10px 5px; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .btn:hover { opacity: 0.9; }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .success-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); text-align: center; display: none; z-index: 1000; }
+        .success-popup.show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>University TechFest Registration</h1>
+            <p>Join us for the biggest technology festival of the year</p>
+        </header>
+
+        <form id="registrationForm">
+            <section class="form-section">
+                <h2>Personal Information</h2>
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                    <div class="error-message" id="fullNameError">Name must be 2-50 characters, letters and spaces only</div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                    <div class="status-message" id="emailStatus"></div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                    <div class="error-message" id="phoneError">Phone must be 10 digits starting with 6-9</div>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender *</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div class="error-message" id="genderError">Please select gender</div>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <h2>Academic Information</h2>
+                <div class="form-group">
+                    <label for="collegeId">College ID *</label>
+                    <input type="text" id="collegeId" name="collegeId" required>
+                    <div class="error-message" id="collegeIdError">College ID must be alphanumeric, 5-15 characters</div>
+                </div>
+                <div class="form-group">
+                    <label for="college">College/University Name *</label>
+                    <input type="text" id="college" name="college" required>
+                    <div class="error-message" id="collegeError">College name is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="year">Current Year *</label>
+                    <select id="year" name="year" required>
+                        <option value="">Select Year</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                        <option value="postgrad">Post Graduate</option>
+                    </select>
+                    <div class="error-message" id="yearError">Please select current year</div>
+                </div>
+                <div class="form-group">
+                    <label for="branch">Branch/Department *</label>
+                    <input type="text" id="branch" name="branch" required>
+                    <div class="error-message" id="branchError">Branch is required</div>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <h2>Competition Track Selection *</h2>
+                <div id="trackSelection">
+                    <div class="track-option" data-track="web-dev">
+                        <input type="radio" name="track" value="web-dev" id="webDev">
+                        <div class="track-name">Web Development</div>
+                        <div class="track-description">Build modern web applications using latest technologies</div>
+                    </div>
+                    <div class="track-option" data-track="mobile-dev">
+                        <input type="radio" name="track" value="mobile-dev" id="mobileDev">
+                        <div class="track-name">Mobile Development</div>
+                        <div class="track-description">Create innovative mobile applications for Android/iOS</div>
+                    </div>
+                    <div class="track-option" data-track="ai-ml">
+                        <input type="radio" name="track" value="ai-ml" id="aiMl">
+                        <div class="track-name">AI/ML</div>
+                        <div class="track-description">Develop intelligent solutions using machine learning</div>
+                    </div>
+                    <div class="track-option" data-track="cybersecurity">
+                        <input type="radio" name="track" value="cybersecurity" id="cybersecurity">
+                        <div class="track-name">Cybersecurity</div>
+                        <div class="track-description">Secure systems and ethical hacking challenges</div>
+                    </div>
+                </div>
+                <div class="error-message" id="trackError">Please select a competition track</div>
+            </section>
+
+            <section class="form-section">
+                <h2>Team Information</h2>
+                <div class="form-group">
+                    <label>Team Size *</label>
+                    <div class="team-size-options">
+                        <div class="team-size-option" data-size="1">Individual</div>
+                        <div class="team-size-option" data-size="2">2 Members</div>
+                        <div class="team-size-option" data-size="3">3 Members</div>
+                        <div class="team-size-option" data-size="4">4 Members</div>
+                    </div>
+                    <div class="error-message" id="teamSizeError">Please select team size</div>
+                </div>
+                <div id="teamMembers"></div>
+            </section>
+
+            <section class="form-section">
+                <h2>Project Information</h2>
+                <div class="form-group">
+                    <label for="projectTitle">Project Title</label>
+                    <input type="text" id="projectTitle" name="projectTitle">
+                    <div class="error-message" id="projectTitleError">Project title should be 5-100 characters if provided</div>
+                </div>
+                <div class="form-group">
+                    <label for="projectDescription">Project Description</label>
+                    <textarea id="projectDescription" name="projectDescription" placeholder="Brief description of your project idea..."></textarea>
+                    <div class="error-message" id="projectDescError">Description should be 10-500 characters if provided</div>
+                </div>
+            </section>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">I agree to the terms and conditions *</label>
+            </div>
+
+            <div style="text-align: center;">
+                <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
+                <button type="button" class="btn btn-success" onclick="exportData()" id="exportBtn" disabled>Export Data</button>
+                <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Register</button>
+            </div>
+        </form>
+
+        <div class="success-popup" id="successPopup">
+            <h3>Registration Successful!</h3>
+            <p>Your registration has been submitted successfully.</p>
+            <p><strong>Registration ID: <span id="registrationId"></span></strong></p>
+            <button class="btn btn-primary" onclick="closePopup()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const patterns = {
+            name: /^[a-zA-Z\s]{2,50}$/,
+            email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            phone: /^[6-9]\d{9}$/,
+            collegeId: /^[a-zA-Z0-9]{5,15}$/,
+            projectTitle: /^.{5,100}$/,
+            projectDesc: /^.{10,500}$/
+        };
+
+        class TechFestRegistration {
+            constructor() {
+                this.personal = {};
+                this.academic = {};
+                this.competition = {};
+                this.team = { size: 0, members: [] };
+                this.project = {};
+                this.timestamp = new Date().toISOString();
+                this.registrationId = this.generateId();
+            }
+
+            generateId() {
+                return 'TECH' + Date.now() + Math.random().toString(36).substr(2, 5).toUpperCase();
+            }
+
+            updatePersonal(data) { this.personal = data; }
+            updateAcademic(data) { this.academic = data; }
+            updateCompetition(data) { this.competition = data; }
+            updateTeam(data) { this.team = data; }
+            updateProject(data) { this.project = data; }
+
+            getRegistrationData() {
+                return {
+                    registrationId: this.registrationId,
+                    personal: this.personal,
+                    academic: this.academic,
+                    competition: this.competition,
+                    team: this.team,
+                    project: this.project,
+                    timestamp: this.timestamp
+                };
+            }
+        }
+
+        const registration = new TechFestRegistration();
+        let selectedTeamSize = 0;
+
+        function validateField(fieldId, pattern, errorId) {
+            const field = document.getElementById(fieldId);
+            const error = document.getElementById(errorId);
+            const value = field.value.trim();
+
+            if (value === '') {
+                field.classList.remove('valid', 'invalid');
+                error.style.display = 'none';
+                return false;
+            }
+
+            const isValid = pattern.test(value);
+            field.classList.toggle('valid', isValid);
+            field.classList.toggle('invalid', !isValid);
+            error.style.display = isValid ? 'none' : 'block';
+            
+            return isValid;
+        }
+
+        async function checkEmailUniqueness(email) {
+            const statusElement = document.getElementById('emailStatus');
+            statusElement.textContent = 'Checking email...';
+            statusElement.className = 'status-message checking';
+
+            await new Promise(resolve => setTimeout(resolve, 800));
+            
+            const registeredEmails = ['admin@university.edu', 'test@example.com', 'demo@college.edu'];
+            const isUnique = !registeredEmails.includes(email.toLowerCase());
+            
+            statusElement.textContent = isUnique ? 'Email available' : 'Email already registered';
+            statusElement.className = `status-message ${isUnique ? 'available' : 'unavailable'}`;
+            
+            return isUnique;
+        }
+
+        function updateTeamSize(size) {
+            selectedTeamSize = size;
+            document.querySelectorAll('.team-size-option').forEach(el => el.classList.remove('selected'));
+            document.querySelector(`[data-size="${size}"]`).classList.add('selected');
+            
+            generateTeamMemberFields(size);
+            validateForm();
+        }
+
+        function generateTeamMemberFields(size) {
+            const container = document.getElementById('teamMembers');
+            container.innerHTML = '';
+
+            if (size <= 1) return;
+
+            for (let i = 2; i <= size; i++) {
+                const memberDiv = document.createElement('div');
+                memberDiv.className = 'team-member';
+                memberDiv.innerHTML = `
+                    <h4>Team Member ${i}</h4>
+                    <div class="form-group">
+                        <label for="member${i}Name">Full Name *</label>
+                        <input type="text" id="member${i}Name" name="member${i}Name" required>
+                        <div class="error-message" id="member${i}NameError">Name is required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="member${i}Email">Email *</label>
+                        <input type="email" id="member${i}Email" name="member${i}Email" required>
+                        <div class="error-message" id="member${i}EmailError">Valid email is required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="member${i}College">College ID *</label>
+                        <input type="text" id="member${i}College" name="member${i}College" required>
+                        <div class="error-message" id="member${i}CollegeError">College ID is required</div>
+                    </div>
+                `;
+                container.appendChild(memberDiv);
+
+                // Add event listeners for new fields with error handling
+                const nameField = document.getElementById(`member${i}Name`);
+                const emailField = document.getElementById(`member${i}Email`);
+                const collegeField = document.getElementById(`member${i}College`);
+                
+                if (nameField) nameField.addEventListener('input', validateForm);
+                if (emailField) emailField.addEventListener('input', validateForm);
+                if (collegeField) collegeField.addEventListener('input', validateForm);
+            }
+        }
+
+        document.querySelectorAll('.track-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.track-option').forEach(el => el.classList.remove('selected'));
+                this.classList.add('selected');
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                validateForm();
+            });
+        });
+
+        document.querySelectorAll('.team-size-option').forEach(option => {
+            option.addEventListener('click', function() {
+                updateTeamSize(parseInt(this.dataset.size));
+            });
+        });
+
+        function validateForm() {
+            let isValid = true;
+
+            const personalFields = [
+                { id: 'fullName', pattern: patterns.name, error: 'fullNameError' },
+                { id: 'email', pattern: patterns.email, error: 'emailError' },
+                { id: 'phone', pattern: patterns.phone, error: 'phoneError' },
+                { id: 'collegeId', pattern: patterns.collegeId, error: 'collegeIdError' }
+            ];
+
+            personalFields.forEach(field => {
+                const fieldElement = document.getElementById(field.id);
+                if (fieldElement && fieldElement.value.trim()) {
+                    if (!validateField(field.id, field.pattern, field.error)) {
+                        isValid = false;
+                    }
+                } else if (fieldElement && fieldElement.hasAttribute('required')) {
+                    fieldElement.classList.add('invalid');
+                    document.getElementById(field.error).style.display = 'block';
+                    isValid = false;
+                } else if (fieldElement) {
+                    fieldElement.classList.remove('valid', 'invalid');
+                    document.getElementById(field.error).style.display = 'none';
+                }
+            });
+            
+            const requiredSelects = ['gender', 'year'];
+            requiredSelects.forEach(id => {
+                const field = document.getElementById(id);
+                const errorElement = document.getElementById(id + 'Error');
+                if (!field.value) {
+                    field.classList.add('invalid');
+                    if (errorElement) errorElement.style.display = 'block';
+                    isValid = false;
+                } else {
+                    field.classList.remove('invalid');
+                    field.classList.add('valid');
+                    if (errorElement) errorElement.style.display = 'none';
+                }
+            });
+
+            const requiredText = ['college', 'branch'];
+            requiredText.forEach(id => {
+                const field = document.getElementById(id);
+                const errorElement = document.getElementById(id + 'Error');
+                if (!field.value.trim()) {
+                    field.classList.add('invalid');
+                    if (errorElement) errorElement.style.display = 'block';
+                    isValid = false;
+                } else {
+                    field.classList.remove('invalid');
+                    field.classList.add('valid');
+                    if (errorElement) errorElement.style.display = 'none';
+                }
+            });
+
+            const trackSelected = document.querySelector('input[name="track"]:checked');
+            const trackError = document.getElementById('trackError');
+            if (!trackSelected) {
+                if (trackError) trackError.style.display = 'block';
+                isValid = false;
+            } else {
+                if (trackError) trackError.style.display = 'none';
+            }
+
+            const teamSizeError = document.getElementById('teamSizeError');
+            if (selectedTeamSize === 0) {
+                if (teamSizeError) teamSizeError.style.display = 'block';
+                isValid = false;
+            } else {
+                if (teamSizeError) teamSizeError.style.display = 'none';
+            }
+
+            for (let i = 2; i <= selectedTeamSize; i++) {
+                const nameField = document.getElementById(`member${i}Name`);
+                const emailField = document.getElementById(`member${i}Email`);
+                const collegeField = document.getElementById(`member${i}College`);
+                
+                if (nameField && !nameField.value.trim()) {
+                    nameField.classList.add('invalid');
+                    const errorElement = document.getElementById(`member${i}NameError`);
+                    if (errorElement) errorElement.style.display = 'block';
+                    isValid = false;
+                } else if (nameField) {
+                    nameField.classList.remove('invalid');
+                    nameField.classList.add('valid');
+                    const errorElement = document.getElementById(`member${i}NameError`);
+                    if (errorElement) errorElement.style.display = 'none';
+                }
+                
+                if (emailField && (!emailField.value.trim() || !patterns.email.test(emailField.value))) {
+                    emailField.classList.add('invalid');
+                    const errorElement = document.getElementById(`member${i}EmailError`);
+                    if (errorElement) errorElement.style.display = 'block';
+                    isValid = false;
+                } else if (emailField) {
+                    emailField.classList.remove('invalid');
+                    emailField.classList.add('valid');
+                    const errorElement = document.getElementById(`member${i}EmailError`);
+                    if (errorElement) errorElement.style.display = 'none';
+                }
+                
+                if (collegeField && !collegeField.value.trim()) {
+                    collegeField.classList.add('invalid');
+                    const errorElement = document.getElementById(`member${i}CollegeError`);
+                    if (errorElement) errorElement.style.display = 'block';
+                    isValid = false;
+                } else if (collegeField) {
+                    collegeField.classList.remove('invalid');
+                    collegeField.classList.add('valid');
+                    const errorElement = document.getElementById(`member${i}CollegeError`);
+                    if (errorElement) errorElement.style.display = 'none';
+                }
+            }
+
+            const projectTitle = document.getElementById('projectTitle').value.trim();
+            const projectDesc = document.getElementById('projectDescription').value.trim();
+            
+            const projectTitleError = document.getElementById('projectTitleError');
+            const projectDescError = document.getElementById('projectDescError');
+            
+            if (projectTitle && !patterns.projectTitle.test(projectTitle)) {
+                document.getElementById('projectTitle').classList.add('invalid');
+                if (projectTitleError) projectTitleError.style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('projectTitle').classList.remove('invalid');
+                if (projectTitle) document.getElementById('projectTitle').classList.add('valid');
+                if (projectTitleError) projectTitleError.style.display = 'none';
+            }
+            
+            if (projectDesc && !patterns.projectDesc.test(projectDesc)) {
+                document.getElementById('projectDescription').classList.add('invalid');
+                if (projectDescError) projectDescError.style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('projectDescription').classList.remove('invalid');
+                if (projectDesc) document.getElementById('projectDescription').classList.add('valid');
+                if (projectDescError) projectDescError.style.display = 'none';
+            }
+
+            const terms = document.getElementById('terms').checked;
+            
+            document.getElementById('submitBtn').disabled = !isValid || !terms;
+            document.getElementById('exportBtn').disabled = !isValid || !terms;
+            
+            return isValid && terms;
+        }
+
+        document.getElementById('fullName').addEventListener('input', validateForm);
+        document.getElementById('email').addEventListener('input', function() {
+            validateForm();
+            if (patterns.email.test(this.value)) {
+                checkEmailUniqueness(this.value);
+            }
+        });
+        document.getElementById('phone').addEventListener('input', validateForm);
+        document.getElementById('gender').addEventListener('change', validateForm);
+        document.getElementById('collegeId').addEventListener('input', validateForm);
+        document.getElementById('college').addEventListener('input', validateForm);
+        document.getElementById('year').addEventListener('change', validateForm);
+        document.getElementById('branch').addEventListener('input', validateForm);
+        document.getElementById('projectTitle').addEventListener('input', validateForm);
+        document.getElementById('projectDescription').addEventListener('input', validateForm);
+        document.getElementById('terms').addEventListener('change', validateForm);
+
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateForm()) {
+                const formData = new FormData(this);
+                
+                registration.updatePersonal({
+                    fullName: formData.get('fullName'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    gender: formData.get('gender')
+                });
+                
+                registration.updateAcademic({
+                    collegeId: formData.get('collegeId'),
+                    college: formData.get('college'),
+                    year: formData.get('year'),
+                    branch: formData.get('branch')
+                });
+                
+                registration.updateCompetition({
+                    track: formData.get('track')
+                });
+                
+                const teamMembers = [{ name: formData.get('fullName'), email: formData.get('email'), collegeId: formData.get('collegeId') }];
+                for (let i = 2; i <= selectedTeamSize; i++) {
+                    teamMembers.push({
+                        name: formData.get(`member${i}Name`),
+                        email: formData.get(`member${i}Email`),
+                        collegeId: formData.get(`member${i}College`)
+                    });
+                }
+                
+                registration.updateTeam({
+                    size: selectedTeamSize,
+                    members: teamMembers
+                });
+                
+                registration.updateProject({
+                    title: formData.get('projectTitle') || '',
+                    description: formData.get('projectDescription') || ''
+                });
+
+                localStorage.setItem('techfestRegistration', JSON.stringify(registration.getRegistrationData()));
+                
+                document.getElementById('registrationId').textContent = registration.registrationId;
+                document.getElementById('successPopup').classList.add('show');
+            }
+        });
+
+        function exportData() {
+            if (validateForm()) {
+                const data = registration.getRegistrationData();
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `techfest_registration_${data.registrationId}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        function clearForm() {
+            document.getElementById('registrationForm').reset();
+            selectedTeamSize = 0;
+            const teamContainer = document.getElementById('teamMembers');
+            if (teamContainer) {
+                teamContainer.innerHTML = '';
+            }
+            document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('.valid, .invalid').forEach(el => {
+                el.classList.remove('valid', 'invalid');
+            });
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('.status-message').forEach(el => {
+                el.textContent = '';
+                el.className = 'status-message';
+            });
+            validateForm();
+        }   
+
+        function closePopup() {
+            const popup = document.getElementById('successPopup');
+            if (popup) {
+                popup.classList.remove('show');
+            }
+        }
+    </script>
+</body>
+</html>
